@@ -25,16 +25,16 @@ website:
         - session-materials/sessions.qmd
         - section: "Session 1"
           contents:
-            - session-materials/session1.qmd
+            - session-materials/session1/session1.qmd
         - section: "Session 2"
           contents:
-            - session-materials/session2.qmd
+            - session-materials/session2/session2.qmd
         - section: "Session 3"
           contents:
-            - session-materials/session3.qmd
+            - session-materials/session3/session3.qmd
         - section: "Session 4"
           contents:
-             - session-materials/session4.qmd
+             - session-materials/session4/session4.qmd
         
     - title: "Assignments"
       contents:
