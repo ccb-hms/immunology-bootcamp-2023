@@ -1,0 +1,59 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Systems Immunology Bootcamp"
+  navbar:
+    background: primary
+    search: true
+    left:
+      - text: "Home"
+        file: index.qmd
+      - text: "In-Class Materials"
+        file: session-materials/sessions.qmd
+      - text: "Assignments"
+        file: problem-sets/problem-sets.qmd
+      - text: "Resources"
+        file: resources/resources.qmd
+
+  sidebar:
+    - title: "In-Class Materials"
+      style: "docked"
+      #background: primary
+      contents:
+        - session-materials/sessions.qmd
+        - section: "Session 1"
+          contents:
+            - session-materials/session1.qmd
+        - section: "Session 2"
+          contents:
+            - session-materials/session2.qmd
+        - section: "Session 3"
+          contents:
+            - session-materials/session3.qmd
+        - section: "Session 4"
+          contents:
+             - session-materials/session4.qmd
+        
+    - title: "Assignments"
+      contents:
+        - problem-sets/problem-sets.qmd
+
+    - title: "Resources"
+      contents:
+        - resources/install.qmd
+        - resources/resources.qmd
+        - resources/quarto-reports.qmd
+        - resources/getting-help.qmd
+        # navigation items
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    toc: true
+    anchor-sections: false
+  # pdf: 
+  #   prefer-html: false

@@ -1,0 +1,9 @@
+---
+title: "Session 4: Modeling"
+author: ""
+format: 
+  html: default
+code-annotations: select
+---
+
+Session 4 materials go here

@@ -1,0 +1,9 @@
+---
+title: "Session 3: Data Exploration and Visualization"
+author: ""
+format: 
+  html: default
+code-annotations: select
+---
+
+Session 3 materials go here

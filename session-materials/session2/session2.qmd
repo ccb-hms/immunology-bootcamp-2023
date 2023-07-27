@@ -1,0 +1,9 @@
+---
+title: "Session 2: Functions and Data Wrangling"
+author: ""
+format: 
+  html: default
+code-annotations: select
+---
+
+Session 2 materials go here

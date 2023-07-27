@@ -1,0 +1,70 @@
+---
+title: "Systems Immunology Bootcamp"
+sidebar: false
+format-links: false
+page-layout: full
+toc: false
+footnotes-hover: true
+---
+
+Instructor learning materials for data analysis module of Research Design and Analysis, 2023. 
+
+### Details {.unnumbered}
+
+{{< fa calendar >}} &nbsp; Sep 5 - Sep 15
+
+{{< fa map-marker >}} &nbsp; TBD
+
+{{< fa video >}} &nbsp; TBD[^1]
+
+[^1]: The zoom link will not be presented on this website since it is public. Please email Chris or Eren if you can't find the Zoom information. 
+
+### Instructors {.unnumbered}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+##### {{< fa user >}} &nbsp; Eren Ada, PhD
+>
+>{{< fa university >}} &nbsp; Senior Bioinformatician, Department of Immunology
+>
+> {{< fa envelope >}} &nbsp; TODO
+>
+> **Office Hours**
+> 
+> {{< fa calendar >}} &nbsp; TBD
+>
+> {{< fa map-marker >}} &nbsp; TBD
+
+:::
+
+::: {.column width="50%"}
+##### {{< fa user >}} &nbsp; Chris Magnano, PhD
+>
+> {{< fa university >}} &nbsp; Curriculum Fellow, [Center for Computational Biomedicine](https://computationalbiomed.hms.harvard.edu/)
+>
+> {{< fa envelope >}} &nbsp; <a href="mailto:christopher_magnano@hms.harvard.edu">christopher_magnano@hms.harvard.edu</a>
+>
+> **Office Hours**
+>
+> {{< fa calendar >}} &nbsp; TBD
+>
+> {{< fa map-marker >}} &nbsp; TBD
+
+:::
+
+:::
+
+## Schedule
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+library(reactable)
+library(reactablefmtr)
+# Load schedule 
+sched <- read_csv("schedule.csv")
+
+reactable(select(sched, `Session`, `Date`, `Time`), theme = flatly(), sortable = FALSE)
+```
