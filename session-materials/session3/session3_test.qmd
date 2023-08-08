@@ -1,0 +1,44 @@
+---
+title: "session3"
+editor: visual
+---
+
+# Session 3: Data Exploration and Visualization
+
+In this session, we will explore the ways to create, manipulate, and export variety of plots such as histograms, boxplots, line plots, and scatter plots.
+
+R is one of the most versatile platform for data visualization and it can create almost any type of graph. Although there are several ways to create graphs in R, we will particularly focus on "ggplot2" package which is arguably one of the most used package in R.
+
+## 
+
+## Introduction to ggplot2 grammar
+
+ggplot2 uses a language (a.k.a grammar of graphics) to describe how to plot data. To begin with, let's call a simple data data set and plot it.
+
+```{r}
+install.packages("mosaicData")
+
+library(mosaicData)
+```
+
+```{r}
+# load data
+data(CPS85 , package = "mosaicData")
+```
+
+::: {.callout-note icon="false"}
+CPS85: Data from the 1985 Current Population Survey (CPS85)
+
+Description
+
+The Current Population Survey (CPS) is used to supplement census information between census years. These data consist of a random sample of persons from the CPS85, with information on wages and other characteristics of the workers, including sex, number of years of education, years of work experience, occupational status, region of residence and union membership.
+
+Source: https://www.rdocumentation.org/packages/mosaicData/versions/0.16.0/topics/CPS85
+:::
+
+```{r}
+library(ggplot2)
+
+ggplot(data = CPS85,
+       mapping = aes(x = exper , y =  wage))
+```
