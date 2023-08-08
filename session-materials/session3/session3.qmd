@@ -1,11 +1,8 @@
 ---
 title: "Session 3: Data Exploration and Visualization"
-author: ""
+author: "Eren Ada"
 format: 
   html: default
 code-annotations: select
 ---
 
-## Test Push
-
-Session 3 materials go here
