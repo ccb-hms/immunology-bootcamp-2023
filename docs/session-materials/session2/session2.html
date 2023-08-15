@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../session-materials/session3/session3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Session 3: Data Exploration and Visualization</span></a>
+ <span class="menu-text">session3</span></a>
   </div>
 </li>
       </ul>
@@ -491,12 +491,12 @@ Solution
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># There's a built-in function called rowMeans! It's always good to look things up. </span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rowMeans</span>(my_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  0.0969043  0.5473584  0.1985713  0.4773305 -0.3359885 -0.2565272</code></pre>
+<pre><code>[1] -1.29216301  0.66419107  0.11514350 -0.51812245 -0.15632537 -0.02452669</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We could also use apply to call mean on each row of the matrix</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(my_matrix, <span class="dv">1</span>, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  0.0969043  0.5473584  0.1985713  0.4773305 -0.3359885 -0.2565272</code></pre>
+<pre><code>[1] -1.29216301  0.66419107  0.11514350 -0.51812245 -0.15632537 -0.02452669</code></pre>
 </div>
 </div>
 </div>
