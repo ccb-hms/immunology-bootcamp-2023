@@ -25,10 +25,17 @@ website:
         - session-materials/sessions.qmd
         - section: "Session 1"
           contents:
-            - session-materials/session1/session1.qmd
+            - session-materials/session1/objects-and-functions.qmd
+            - session-materials/session1/vectors-and-conditionals.qmd
+            - session-materials/session1/missing-data-and-generators.qmd
+            - session-materials/session1/other-data-types.qmd
         - section: "Session 2"
           contents:
-            - session-materials/session2/session2.qmd
+            - session-materials/session2/making-functions.qmd
+            - session-materials/session2/loops.qmd
+            - session-materials/session2/tidyverse-basics.qmd
+            - session-materials/session2/split-apply-combine.qmd
+            - session-materials/session2/reshaping-and-joining.qmd
         - section: "Session 3"
           contents:
             - session-materials/session3/session3.qmd

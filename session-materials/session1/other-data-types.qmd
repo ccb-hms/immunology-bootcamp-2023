@@ -1,0 +1,103 @@
+---
+title: "Other Base R Types"
+author: ""
+format: 
+  html: default
+code-annotations: select
+---
+
+## Categorical Data
+
+### Factors
+
+Since factors are special vectors, the same rules for selecting values using indices apply.
+
+```{r}
+expression <- factor(c("high","low","low","medium","high","medium","medium","low","low","low"))
+```
+
+In this vector we can imagine gene expression data has been stored as 3 categories or levels: low, medium, and high.
+
+Let's extract the values of the factor with high expression:
+
+```{r}
+expression[expression == "high"]    ## This will only return those elements in the factor equal to "high"
+```
+
+Under the hood, factors are stored as integer values in R.
+To view the integer assignments under the hood you can use `str()`:
+
+```{r}
+str(expression)
+```
+
+The categories are referred to as "factor levels". As we learned earlier, the levels in the `expression` factor were assigned integers alphabetically, with high=1, low=2, medium=3. However, it makes more sense for us if low=1, medium=2 and high=3.
+We can change the order of the categories by **releveling** the factor.
+
+To relevel the categories, you can add the `levels` argument to the `factor()` function, and give it a vector with the categories listed in the required order:
+
+```{r}
+expression <- factor(expression, levels=c("low", "medium", "high"))     # you can re-factor a factor 
+```
+
+Now we have a releveled factor with low as the lowest or first category, medium as the second and high as the third. This is reflected in the way they are listed in the output of `str()`, as well as in the numbering of which category is where in the factor.
+
+```{r}
+str(expression)
+```
+
+> Note: Releveling often becomes necessary when you need a specific category in a factor to be the "base" category, i.e. category that is equal to 1. One example would be if you need the "control" to be the "base" in a given RNA-seq experiment.
+
+### Data Frame
+
+A `data.frame` is the *de facto* data structure for most tabular data and what we use for statistics and plotting. A `data.frame` is similar to a matrix in that it's a collection of vectors of the **same length** and each vector represents a column. However, in a dataframe **each vector can be of a different data type** (e.g., characters, integers, factors). 
+
+We can create a dataframe by bringing **vectors** together to **form the columns**. We do this using the `data.frame()` function, and giving the function the different vectors we would like to bind together. *This function will only work for vectors of the same length.*
+
+```{r}
+# First let's make some accompanying name and expression data for our expression levels
+gene_names <- c("Asl","Apod","Cyp2d22","Klk6","Fcrls","Slc2a4","Exd2","Gjc2","Plp1","Gnb4")
+
+# Generating random data inline with the expression values
+numeric_expression <- (as.numeric(expression) * 1000) + (rnorm(10) * 900)
+
+# Create a data frame and store it as a variable called 'df'
+df <- data.frame(gene_names, expression, numeric_expression)
+```
+
+We can see that a new variable called `df` has been created in our `Environment` within a new section called `Data`. In the `Environment`, it specifies that `df` has 3 observations of 2 variables. What does that mean? In R, rows always come first, so it means that `df` has 3 rows and 2 columns. We can get additional information if we click on the blue circle with the white triangle in the middle next to `df`. It will display information about each of the columns in the data frame, giving information about what the data type is of each of the columns and the first few values of those columns.
+
+Another handy feature in RStudio is that if we hover the cursor over the variable name in the `Environment`, `df`, it will turn into a pointing finger. If you click on `df`, it will open the data frame as it's own tab next to the script editor. We can explore the table interactively within this window. To close, just click on the X on the tab.
+
+As with any variable, we can print the values stored inside to the console if we type the variable's name and run.
+
+```{r}
+df
+```
+
+### Lists
+
+Lists are a data structure in R that can be perhaps a bit daunting at first, but soon become amazingly useful. A list is a data structure that can hold any number of any types of other data structures.
+
+If you have variables of different data structures you wish to combine, you can put all of those into one list object by using the `list()` function and placing all the items you wish to combine within parentheses:
+
+```{r}
+age <- 102
+list1 <- list(expression, df, age)
+```
+
+We see `list1` appear within the Data section of our environment as a list of 3 components or variables. If we click on the blue circle with a triangle in the middle, it's not quite as interpretable as it was for data frames.
+
+Essentially, each component is preceded by a colon. The first colon give the `expression` vector, the second colon precedes the `df` data frame, with the dollar signs indicating the different columns, the last colon gives the single value, `age`.
+
+Let's type list1 and print to the console by running it.
+
+```{r}
+list1
+```
+
+There are three components corresponding to the three different variables we passed in, and what you see is that structure of each is retained. Each component of a list is referenced based on the number position.
+
+----------------------------------------------------------------------s--
+
+*The materials in this lesson have been adapted from work created by the [HBC](http://bioinformatics.sph.harvard.edu/) and [Data Carpentry](http://datacarpentry.org/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*

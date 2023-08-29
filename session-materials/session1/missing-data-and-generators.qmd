@@ -1,0 +1,131 @@
+---
+title: "Missing Data and Generators"
+author: ""
+format: 
+  html: default
+code-annotations: select
+---
+
+## Missing data
+
+As R was designed to analyze datasets, it includes the concept of
+missing data (which is uncommon in other programming
+languages). Missing data are represented in vectors as `NA`.
+
+When doing operations on numbers, most functions will return `NA` if
+the data you are working with include missing values. This feature
+makes it harder to overlook the cases where you are dealing with
+missing data.  You can add the argument `na.rm = TRUE` to calculate
+the result while ignoring the missing values.
+
+```{r}
+heights <- c(2, 4, 4, NA, 6)
+mean(heights)
+max(heights)
+mean(heights, na.rm = TRUE)
+max(heights, na.rm = TRUE)
+```
+
+If your data include missing values, you may want to become familiar
+with the functions `is.na()`, `na.omit()`, and `complete.cases()`. See
+below for examples.
+
+```{r}
+## Extract those elements which are not missing values.
+heights[!is.na(heights)]
+
+## Returns the object with incomplete cases removed.
+## The returned object is an atomic vector of type `"numeric"`
+## (or `"double"`).
+na.omit(heights)
+
+## Extract those elements which are complete cases.
+## The returned object is an atomic vector of type `"numeric"`
+## (or `"double"`).
+heights[complete.cases(heights)]
+```
+
+::: {.callout-note icon=false}
+
+## Challenge:
+
+1. Using this vector of heights in inches, create a new vector with the NAs removed.
+
+```{r}
+heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72, 65, 64, 70, 63, 65)
+```
+
+2. Use the function `median()` to calculate the median of the `heights` vector.
+3. Use R to figure out how many people in the set are taller than 67 inches.
+
+::: 
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+```{r, purl=TRUE}
+heights_no_na <- heights[!is.na(heights)]
+## or
+heights_no_na <- na.omit(heights)
+```
+
+```{r, purl=TRUE}
+median(heights, na.rm = TRUE)
+```
+
+```{r, purl=TRUE}
+heights_above_67 <- heights_no_na[heights_no_na > 67]
+length(heights_above_67)
+```
+
+:::
+
+## Generating vectors {#sec:genvec}
+
+```{r, echo=FALSE}
+set.seed(1)
+```
+
+There exists some functions to generate vectors of different type. To
+generate a vector of numerics, one can use the `numeric()`
+constructor, providing the length of the output vector as
+parameter. The values will be initialised with 0.
+
+```{r, purl=TRUE}
+numeric(3)
+numeric(10)
+```
+
+Note that if we ask for a vector of numerics of length 0, we obtain
+exactly that:
+
+```{r, purl=TRUE}
+numeric(0)
+```
+
+There are similar constructors for characters and logicals, named
+`character()` and `logical()` respectively.
+
+::: {.callout-note icon=false}
+
+## Challenge:
+
+What are the defaults for character and logical vectors?
+
+::: 
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+```{r, purl=TRUE}
+character(2) ## the empty character
+logical(2)   ## FALSE
+```
+
+:::
+
+------------------------------------------------------------------------
+
+*The materials in this lesson have been adapted from work created by the [HBC](http://bioinformatics.sph.harvard.edu/) and [Data Carpentry](http://datacarpentry.org/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*

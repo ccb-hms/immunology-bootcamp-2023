@@ -8,7 +8,7 @@
 
 <meta name="author" content="">
 
-<title>Systems Immunology Bootcamp - Session 4: Modeling</title>
+<title>Systems Immunology Bootcamp - Other Base R Types</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -110,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/session4.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/session4.html">Session 4: Modeling</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session1/objects-and-functions.html">Session 1</a></li><li class="breadcrumb-item"><a href="../../session-materials/session1/other-data-types.html">Other Base R Types</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session1/other-data-types.html" class="sidebar-item-text sidebar-link">
+  <a href="../../session-materials/session1/other-data-types.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Other Base R Types</span></a>
   </div>
 </li>
@@ -232,7 +266,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/session4.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../session-materials/session4/session4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 4: Modeling</span></a>
   </div>
 </li>
@@ -244,14 +278,25 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#categorical-data" id="toc-categorical-data" class="nav-link active" data-scroll-target="#categorical-data">Categorical Data</a>
+  <ul class="collapse">
+  <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors">Factors</a></li>
+  <li><a href="#data-frame" id="toc-data-frame" class="nav-link" data-scroll-target="#data-frame">Data Frame</a></li>
+  <li><a href="#lists" id="toc-lists" class="nav-link" data-scroll-target="#lists">Lists</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Session 4: Modeling</h1>
+<h1 class="title">Other Base R Types</h1>
 </div>
 
 
@@ -266,9 +311,122 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Session 4 materials go here</p>
+<section id="categorical-data" class="level2">
+<h2 data-anchor-id="categorical-data">Categorical Data</h2>
+<section id="factors" class="level3">
+<h3 data-anchor-id="factors">Factors</h3>
+<p>Since factors are special vectors, the same rules for selecting values using indices apply.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>expression <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"high"</span>,<span class="st">"low"</span>,<span class="st">"low"</span>,<span class="st">"medium"</span>,<span class="st">"high"</span>,<span class="st">"medium"</span>,<span class="st">"medium"</span>,<span class="st">"low"</span>,<span class="st">"low"</span>,<span class="st">"low"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this vector we can imagine gene expression data has been stored as 3 categories or levels: low, medium, and high.</p>
+<p>Let’s extract the values of the factor with high expression:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>expression[expression <span class="sc">==</span> <span class="st">"high"</span>]    <span class="do">## This will only return those elements in the factor equal to "high"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] high high
+Levels: high low medium</code></pre>
+</div>
+</div>
+<p>Under the hood, factors are stored as integer values in R. To view the integer assignments under the hood you can use <code>str()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(expression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 3 levels "high","low","medium": 1 2 2 3 1 3 3 2 2 2</code></pre>
+</div>
+</div>
+<p>The categories are referred to as “factor levels”. As we learned earlier, the levels in the <code>expression</code> factor were assigned integers alphabetically, with high=1, low=2, medium=3. However, it makes more sense for us if low=1, medium=2 and high=3. We can change the order of the categories by <strong>releveling</strong> the factor.</p>
+<p>To relevel the categories, you can add the <code>levels</code> argument to the <code>factor()</code> function, and give it a vector with the categories listed in the required order:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>expression <span class="ot">&lt;-</span> <span class="fu">factor</span>(expression, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"medium"</span>, <span class="st">"high"</span>))     <span class="co"># you can re-factor a factor </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we have a releveled factor with low as the lowest or first category, medium as the second and high as the third. This is reflected in the way they are listed in the output of <code>str()</code>, as well as in the numbering of which category is where in the factor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(expression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 3 levels "low","medium",..: 3 1 1 2 3 2 2 1 1 1</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Note: Releveling often becomes necessary when you need a specific category in a factor to be the “base” category, i.e.&nbsp;category that is equal to 1. One example would be if you need the “control” to be the “base” in a given RNA-seq experiment.</p>
+</blockquote>
+</section>
+<section id="data-frame" class="level3">
+<h3 data-anchor-id="data-frame">Data Frame</h3>
+<p>A <code>data.frame</code> is the <em>de facto</em> data structure for most tabular data and what we use for statistics and plotting. A <code>data.frame</code> is similar to a matrix in that it’s a collection of vectors of the <strong>same length</strong> and each vector represents a column. However, in a dataframe <strong>each vector can be of a different data type</strong> (e.g., characters, integers, factors).</p>
+<p>We can create a dataframe by bringing <strong>vectors</strong> together to <strong>form the columns</strong>. We do this using the <code>data.frame()</code> function, and giving the function the different vectors we would like to bind together. <em>This function will only work for vectors of the same length.</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First let's make some accompanying name and expression data for our expression levels</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gene_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Asl"</span>,<span class="st">"Apod"</span>,<span class="st">"Cyp2d22"</span>,<span class="st">"Klk6"</span>,<span class="st">"Fcrls"</span>,<span class="st">"Slc2a4"</span>,<span class="st">"Exd2"</span>,<span class="st">"Gjc2"</span>,<span class="st">"Plp1"</span>,<span class="st">"Gnb4"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generating random data inline with the expression values</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>numeric_expression <span class="ot">&lt;-</span> (<span class="fu">as.numeric</span>(expression) <span class="sc">*</span> <span class="dv">1000</span>) <span class="sc">+</span> (<span class="fu">rnorm</span>(<span class="dv">10</span>) <span class="sc">*</span> <span class="dv">900</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame and store it as a variable called 'df'</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(gene_names, expression, numeric_expression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can see that a new variable called <code>df</code> has been created in our <code>Environment</code> within a new section called <code>Data</code>. In the <code>Environment</code>, it specifies that <code>df</code> has 3 observations of 2 variables. What does that mean? In R, rows always come first, so it means that <code>df</code> has 3 rows and 2 columns. We can get additional information if we click on the blue circle with the white triangle in the middle next to <code>df</code>. It will display information about each of the columns in the data frame, giving information about what the data type is of each of the columns and the first few values of those columns.</p>
+<p>Another handy feature in RStudio is that if we hover the cursor over the variable name in the <code>Environment</code>, <code>df</code>, it will turn into a pointing finger. If you click on <code>df</code>, it will open the data frame as it’s own tab next to the script editor. We can explore the table interactively within this window. To close, just click on the X on the tab.</p>
+<p>As with any variable, we can print the values stored inside to the console if we type the variable’s name and run.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   gene_names expression numeric_expression
+1         Asl       high          2507.6476
+2        Apod        low           737.0622
+3     Cyp2d22        low          1140.8275
+4        Klk6     medium          1755.3778
+5       Fcrls       high          3618.8934
+6      Slc2a4     medium          2680.4441
+7        Exd2     medium          1749.9926
+8        Gjc2        low          1035.1408
+9        Plp1        low          1911.0148
+10       Gnb4        low          1111.6686</code></pre>
+</div>
+</div>
+</section>
+<section id="lists" class="level3">
+<h3 data-anchor-id="lists">Lists</h3>
+<p>Lists are a data structure in R that can be perhaps a bit daunting at first, but soon become amazingly useful. A list is a data structure that can hold any number of any types of other data structures.</p>
+<p>If you have variables of different data structures you wish to combine, you can put all of those into one list object by using the <code>list()</code> function and placing all the items you wish to combine within parentheses:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">102</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>list1 <span class="ot">&lt;-</span> <span class="fu">list</span>(expression, df, age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We see <code>list1</code> appear within the Data section of our environment as a list of 3 components or variables. If we click on the blue circle with a triangle in the middle, it’s not quite as interpretable as it was for data frames.</p>
+<p>Essentially, each component is preceded by a colon. The first colon give the <code>expression</code> vector, the second colon precedes the <code>df</code> data frame, with the dollar signs indicating the different columns, the last colon gives the single value, <code>age</code>.</p>
+<p>Let’s type list1 and print to the console by running it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>list1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1] high   low    low    medium high   medium medium low    low    low   
+Levels: low medium high
+
+[[2]]
+   gene_names expression numeric_expression
+1         Asl       high          2507.6476
+2        Apod        low           737.0622
+3     Cyp2d22        low          1140.8275
+4        Klk6     medium          1755.3778
+5       Fcrls       high          3618.8934
+6      Slc2a4     medium          2680.4441
+7        Exd2     medium          1749.9926
+8        Gjc2        low          1035.1408
+9        Plp1        low          1911.0148
+10       Gnb4        low          1111.6686
+
+[[3]]
+[1] 102</code></pre>
+</div>
+</div>
+<p>There are three components corresponding to the three different variables we passed in, and what you see is that structure of each is retained. Each component of a list is referenced based on the number position.</p>
+<p>———————————————————————-s–</p>
+<p><em>The materials in this lesson have been adapted from work created by the <a href="http://bioinformatics.sph.harvard.edu/">HBC</a> and <a href="http://datacarpentry.org/">Data Carpentry</a>. These are open access materials distributed under the terms of the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a> (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</em></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -1,0 +1,216 @@
+---
+title: "Split-Apply-Combine"
+author: ""
+format: 
+  html: default
+code-annotations: select
+---
+
+```{r, message=FALSE, echo=FALSE}
+## load the tidyverse packages
+library("tidyverse")
+rna <- read_csv("data/rnaseq.csv")
+```
+
+## Split-apply-combine data analysis
+
+Many data analysis tasks can be approached using the
+*split-apply-combine* paradigm: split the data into groups, apply some
+analysis to each group, and then combine the results. **`dplyr`**
+makes this very easy through the use of the `group_by()` function.
+
+```{r}
+rna %>%
+  group_by(gene)
+```
+
+The `group_by()` function doesn't perform any data processing, it
+groups the data into subsets: in the example above, our initial
+`tibble` of `r nrow(rna)` observations is split into
+`r length(unique(rna$gene))` groups based on the `gene` variable.
+
+We could similarly decide to group the tibble by the samples:
+
+```{r}
+rna %>%
+  group_by(sample)
+```
+
+Here our initial `tibble` of `r nrow(rna)` observations is split into
+`r length(unique(rna$sample))` groups based on the `sample` variable.
+
+Once the data has been grouped, subsequent operations will be
+applied on each group independently.
+
+### The `summarise()` function
+
+`group_by()` is often used together with `summarise()`, which
+collapses each group into a single-row summary of that group.
+
+`group_by()` takes as arguments the column names that contain the
+**categorical** variables for which you want to calculate the summary
+statistics. So to compute the mean `expression` by gene:
+
+```{r}
+rna %>%
+  group_by(gene) %>%
+  summarise(mean_expression = mean(expression))
+```
+
+We could also want to calculate the mean expression levels of all genes in each sample:
+
+```{r}
+rna %>%
+  group_by(sample) %>%
+  summarise(mean_expression = mean(expression))
+```
+
+But we can can also group by multiple columns:
+
+```{r}
+rna %>%
+  group_by(gene, infection, time) %>%
+  summarise(mean_expression = mean(expression))
+```
+
+Once the data is grouped, you can also summarise multiple variables at the same
+time (and not necessarily on the same variable). For instance, we could add a
+column indicating the median `expression` by gene and by condition:
+
+```{r, purl=TRUE}
+rna %>%
+  group_by(gene, infection, time) %>%
+  summarise(mean_expression = mean(expression),
+            median_expression = median(expression))
+```
+
+::: {.callout-note icon=false}
+
+## Challenge
+
+Calculate the mean expression level of gene "Dok3" by timepoints.
+
+:::
+
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+```{r, purl=TRUE}
+rna %>%
+  filter(gene == "Dok3") %>%
+  group_by(time) %>%
+  summarise(mean = mean(expression))
+```
+
+:::
+
+### Counting
+
+When working with data, we often want to know the number of observations found
+for each factor or combination of factors. For this task, **`dplyr`** provides
+`count()`. For example, if we wanted to count the number of rows of data for
+each infected and non-infected samples, we would do:
+
+```{r, purl=TRUE}
+rna %>%
+    count(infection)
+```
+
+The `count()` function is shorthand for something we've already seen: grouping by a variable, and summarising it by counting the number of observations in that group. In other words, `rna %>% count(infection)` is equivalent to:
+
+```{r, purl=TRUE}
+rna %>%
+    group_by(infection) %>%
+    summarise(n = n())
+```
+
+The previous example shows the use of `count()` to count the number of rows/observations
+for *one* factor (i.e., `infection`).
+If we wanted to count a *combination of factors*, such as `infection` and `time`,
+we would specify the first and the second factor as the arguments of `count()`:
+
+```{r, purl=TRUE}
+rna %>%
+    count(infection, time)
+```
+
+which is equivalent to this:
+
+```{r, purl=TRUE}
+rna %>%
+  group_by(infection, time) %>%
+  summarise(n = n())
+```
+
+It is sometimes useful to sort the result to facilitate the comparisons.
+We can use `arrange()` to sort the table.
+For instance, we might want to arrange the table above by time:
+
+```{r, purl=TRUE}
+rna %>%
+  count(infection, time) %>%
+  arrange(time)
+```
+
+or by counts:
+
+```{r, purl=TRUE}
+rna %>%
+  count(infection, time) %>%
+  arrange(n)
+```
+
+To sort in descending order, we need to add the `desc()` function:
+
+```{r, purl=TRUE}
+rna %>%
+  count(infection, time) %>%
+  arrange(desc(n))
+```
+
+::: {.callout-note icon=false}
+
+## Challenge
+
+1. How many genes were analysed in each sample?
+2. Use `group_by()` and `summarise()` to evaluate the sequencing depth (the sum of all counts) in each sample. Which sample has the highest sequencing depth?
+3. Pick one sample and evaluate the number of genes by biotype.
+4. Identify genes associated with the "abnormal DNA methylation" phenotype description, and calculate their mean expression (in log) at time 0, time 4 and time 8.
+
+:::
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+```{r}
+## 1.
+rna %>%
+  count(sample)
+## 2.
+rna %>%
+  group_by(sample) %>%
+  summarise(seq_depth = sum(expression)) %>%
+  arrange(desc(seq_depth))
+## 3.
+rna %>%
+  filter(sample == "GSM2545336") %>%
+  group_by(gene_biotype) %>%
+  count(gene_biotype) %>%
+  arrange(desc(n))
+## 4.
+rna %>%
+  filter(phenotype_description == "abnormal DNA methylation") %>%
+  group_by(gene, time) %>%
+  summarise(mean_expression = mean(log(expression))) %>%
+  arrange()
+```
+
+
+:::
+
+------------------------------------------------------------------------
+
+*The materials in this lesson have been adapted from work created by the (HBC)\](http://bioinformatics.sph.harvard.edu/) and Data Carpentry (http://datacarpentry.org/), as well as materials created by Laurent Gatto, Charlotte Soneson, Jenny Drnevich, Robert Castelo, and Kevin Rue-Albert. These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*

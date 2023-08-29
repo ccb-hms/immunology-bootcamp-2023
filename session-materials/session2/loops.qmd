@@ -1,0 +1,88 @@
+---
+title: "For loops"
+author: ""
+format: 
+  html: default
+code-annotations: select
+---
+
+## For Loops
+
+
+Loops are a fundamental structure for repetition in programming.
+`for` loops perform the same action for each item in a list of things.
+The basic syntax is:
+
+```{r}
+#| eval: false
+for (item in list_of_items) {
+  do_something(item)
+}
+```
+
+We can create a vector on the fly to loop a particular number of times:
+
+```{r}
+for (i in 1:5){
+  print(i)
+}
+```
+
+Or use a pre-existing vector or list. 
+
+```{r}
+volumes = c(1.6, 3, 8)
+for (volume in volumes){
+  mass <- 2.65 * volume ^ 0.9
+  print(mass)
+}
+```
+
+We also might want to loop over indices so we can access multiple vectors. 
+
+```{r}
+as <- c(2.65, 1.28, 3.29)
+bs <- c(0.9, 1.1, 1.2)
+volumes = c(1.6, 3, 8)
+masses <- vector(mode="numeric", length=length(volumes))
+for (i in 1:length(volumes)){
+   mass <- as[i] * volumes[i] ^ bs[i]
+   masses[i] <- mass
+}
+masses
+```
+
+We can use functions inside loops. For example, let’s take a function that returns an estimated mass if the `volume > 5` and `NA` if it’s not.
+
+```{r}
+est_mass <- function(volume, a, b){
+  if (volume > 5) {
+    mass <- a * volume ^ b
+  } else {
+    mass <- NA
+  }
+  return(mass)
+}
+```
+
+We can then call the function to populate a vector item by item. 
+
+```{r}
+masses <- vector(mode="numeric", length=length(volumes))
+for (i in 1:length(volumes)){
+   mass <- est_mass(volumes[i], as[i], bs[i])
+   masses[i] <- mass
+}
+masses
+```
+
+To note, this is the for loop equivalent of an `mapply` statement.
+
+```{r}
+masses_apply <- mapply(est_mass, volumes, as, bs)
+masses_apply
+```
+In R we often want to use `apply` statements as opposed to explicitly writing loops. 
+------------------------------------------------------------------------
+
+*The materials in this lesson have been adapted from work created by the (HBC)\](http://bioinformatics.sph.harvard.edu/) and Data Carpentry (http://datacarpentry.org/), as well as materials created by Laurent Gatto, Charlotte Soneson, Jenny Drnevich, Robert Castelo, and Kevin Rue-Albert. These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*

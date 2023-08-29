@@ -1,0 +1,520 @@
+---
+title: "Reshaping and Joining Data"
+author: ""
+format: 
+  html: default
+code-annotations: select
+---
+
+```{r, message=FALSE, echo=FALSE}
+## load the tidyverse packages
+library("tidyverse")
+rna <- read_csv("data/rnaseq.csv")
+```
+
+## Reshaping data
+
+In the `rna` tibble, the rows contain expression values (the unit) that are
+associated with a combination of 2 other variables: `gene` and `sample`.
+
+All the other columns correspond to variables describing either
+the sample (organism, age, sex, ...) or the gene (gene\_biotype, ENTREZ\_ID, product, ...).
+The variables that don't change with genes or with samples will have the same value in all the rows.
+
+```{r}
+rna %>%
+  arrange(gene)
+```
+
+This structure is called a `long-format`, as one column contains all the values,
+and other column(s) list(s) the context of the value.
+
+In certain cases, the `long-format` is not really "human-readable", and another format,
+a `wide-format` is preferred, as a more compact way of representing the data.
+This is typically the case with gene expression values that scientists are used to
+look as matrices, were rows represent genes and columns represent samples.
+
+In this format, it would therefore become straightforward
+to explore the relationship between the gene expression levels within, and
+between, the samples.
+
+```{r, echo=FALSE}
+rna %>%
+  select(gene, sample, expression) %>%
+  pivot_wider(names_from = sample,
+              values_from = expression)
+```
+
+To convert the gene expression values from `rna` into a wide-format,
+we need to create a new table where the values of the `sample` column would
+become the names of column variables.
+
+The key point here is that we are still following
+a tidy data structure, but we have **reshaped** the data according to
+the observations of interest: expression levels per gene instead
+of recording them per gene and per sample.
+
+The opposite transformation would be to transform column names into
+values of a new variable.
+
+We can do both these of transformations with two `tidyr` functions,
+`pivot_longer()` and `pivot_wider()` (see
+[here](https://tidyr.tidyverse.org/dev/articles/pivot.html) for
+details).
+
+### Pivoting the data into a wider format
+
+Let's select the first 3 columns of `rna` and use `pivot_wider()`
+to transform the data into a wide-format.
+
+```{r, purl=TRUE}
+rna_exp <- rna %>%
+  select(gene, sample, expression)
+rna_exp
+```
+
+`pivot_wider` takes three main arguments:
+
+1. the data to be transformed;
+2. the `names_from` : the column whose values will become new column
+  names;
+3. the `values_from`: the column whose values will fill the new
+  columns.
+
+```{r, fig.cap="Wide pivot of the `rna` data.", echo=FALSE, message=FALSE}
+knitr::include_graphics("../../img/pivot_wider.png")
+```
+
+```{r, purl=TRUE}
+rna_wide <- rna_exp %>%
+  pivot_wider(names_from = sample,
+              values_from = expression)
+rna_wide
+```
+
+Note that by default, the `pivot_wider()` function will add `NA` for missing values.
+
+Let's imagine that for some reason, we had some missing expression values for some
+genes in certain samples. In the following fictive example, the gene Cyp2d22 has only
+one expression value, in GSM2545338 sample.
+
+```{r, purl=TRUE, echo=FALSE}
+rna_with_missing_values <- rna %>%
+  select(gene, sample, expression) %>%
+  filter(gene %in% c("Asl", "Apod", "Cyp2d22")) %>%
+  filter(sample %in% c("GSM2545336", "GSM2545337", "GSM2545338")) %>%
+  arrange(sample) %>%
+  filter(!(gene == "Cyp2d22" & sample != "GSM2545338"))
+```
+
+```{r, purl=TRUE}
+rna_with_missing_values
+```
+
+By default, the `pivot_wider()` function will add `NA` for missing
+values. This can be parameterised with the `values_fill` argument of
+the `pivot_wider()` function.
+
+```{r, purl=TRUE}
+rna_with_missing_values %>%
+  pivot_wider(names_from = sample,
+              values_from = expression)
+
+rna_with_missing_values %>%
+  pivot_wider(names_from = sample,
+              values_from = expression,
+              values_fill = 0)
+```
+
+### Pivoting data into a longer format
+
+In the opposite situation we are using the column names and turning them into
+a pair of new variables. One variable represents the column names as
+values, and the other variable contains the values previously
+associated with the column names.
+
+`pivot_longer()` takes four main arguments:
+
+1. the data to be transformed;
+2. the `names_to`: the new column name we wish to create and populate with the
+  current column names;
+3. the `values_to`: the new column name we wish to create and populate with
+  current values;
+4. the names of the columns to be used to populate the `names_to` and
+  `values_to` variables (or to drop).
+
+```{r, fig.cap="Long pivot of the `rna` data.", echo=FALSE, message=FALSE}
+knitr::include_graphics("../../img/pivot_longer.png")
+```
+
+To recreate `rna_long` from `rna_wide` we would create a key
+called `sample` and value called `expression` and use all columns
+except `gene` for the key variable. Here we drop `gene` column
+with a minus sign.
+
+Notice how the new variable names are to be quoted here.
+
+```{r}
+rna_long <- rna_wide %>%
+    pivot_longer(names_to = "sample",
+                 values_to = "expression",
+                 -gene)
+rna_long
+```
+
+We could also have used a specification for what columns to
+include. This can be useful if you have a large number of identifying
+columns, and it's easier to specify what to gather than what to leave
+alone. Here the `starts_with()` function can help to retrieve sample
+names without having to list them all!
+Another possibility would be to use the `:` operator!
+
+```{r}
+rna_wide %>%
+    pivot_longer(names_to = "sample",
+                 values_to = "expression",
+                 cols = starts_with("GSM"))
+rna_wide %>%
+    pivot_longer(names_to = "sample",
+                 values_to = "expression",
+                 GSM2545336:GSM2545380)
+```
+
+Note that if we had missing values in the wide-format, the `NA` would be
+included in the new long format.
+
+Remember our previous fictive tibble containing missing values:
+
+```{r}
+rna_with_missing_values
+
+wide_with_NA <- rna_with_missing_values %>%
+  pivot_wider(names_from = sample,
+              values_from = expression)
+wide_with_NA
+
+wide_with_NA %>%
+    pivot_longer(names_to = "sample",
+                 values_to = "expression",
+                 -gene)
+```
+
+Pivoting to wider and longer formats can be a useful way to balance out a dataset
+so every replicate has the same composition.
+
+::: {.callout-note icon=false}
+
+## Question
+
+Starting from the rna table, use the `pivot_wider()` function to create
+a wide-format table giving the gene expression levels in each mouse.
+Then use the `pivot_longer()` function to restore a long-format table.
+
+:::
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+```{r, answer=TRUE, purl=TRUE}
+rna1 <- rna %>%
+select(gene, mouse, expression) %>%
+pivot_wider(names_from = mouse, values_from = expression)
+rna1
+
+rna1 %>%
+pivot_longer(names_to = "mouse_id", values_to = "counts", -gene)
+```
+
+:::
+
+::: {.callout-note icon=false}
+
+## Question
+
+Subset genes located on X and Y chromosomes from the `rna` data frame and
+spread the data frame with `sex` as columns, `chromosome_name` as
+rows, and the mean expression of genes located in each chromosome as the values,
+as in the following tibble:
+
+```{r, echo=FALSE, message=FALSE}
+knitr::include_graphics("../../img/Exercise_pivot_W.png")
+```
+
+You will need to summarise before reshaping!
+
+:::
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+Let's first calculate the mean expression level of X and Y linked genes from
+male and female samples...
+
+```{r}
+ rna %>%
+  filter(chromosome_name == "Y" | chromosome_name == "X") %>%
+  group_by(sex, chromosome_name) %>%
+  summarise(mean = mean(expression))
+```
+
+And pivot the table to wide format
+
+```{r, answer=TRUE, purl=TRUE}
+rna_1 <- rna %>%
+  filter(chromosome_name == "Y" | chromosome_name == "X") %>%
+  group_by(sex, chromosome_name) %>%
+  summarise(mean = mean(expression)) %>%
+  pivot_wider(names_from = sex,
+              values_from = mean)
+
+rna_1
+```
+
+Now take that data frame and transform it with `pivot_longer()` so
+each row is a unique `chromosome_name` by `gender` combination.
+
+```{r, answer=TRUE, purl=TRUE}
+rna_1 %>%
+  pivot_longer(names_to = "gender",
+               values_to = "mean",
+               -chromosome_name)
+
+```
+
+:::
+
+::: {.callout-note icon=false}
+
+## Question
+
+Use the `rna` dataset to create an expression matrix where each row
+represents the mean expression levels of genes and columns represent
+the different timepoints.
+
+:::
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+Let's first calculate the mean expression by gene and by time
+
+```{r}
+rna %>%
+  group_by(gene, time) %>%
+  summarise(mean_exp = mean(expression))
+```
+
+before using the pivot\_wider() function
+
+```{r}
+rna_time <- rna %>%
+  group_by(gene, time) %>%
+  summarise(mean_exp = mean(expression)) %>%
+  pivot_wider(names_from = time,
+              values_from = mean_exp)
+rna_time
+```
+
+Notice that this generates a tibble with some column names starting by a number.
+If we wanted to select the column corresponding to the timepoints,
+we could not use the column names directly... What happens when we select the column 4?
+
+```{r}
+rna %>%
+  group_by(gene, time) %>%
+  summarise(mean_exp = mean(expression)) %>%
+  pivot_wider(names_from = time,
+              values_from = mean_exp) %>%
+  select(gene, 4)
+```
+
+To select the timepoint 4, we would have to quote the column name, with backticks "\`"
+
+```{r}
+rna %>%
+  group_by(gene, time) %>%
+  summarise(mean_exp = mean(expression)) %>%
+  pivot_wider(names_from = time,
+              values_from = mean_exp) %>%
+  select(gene, `4`)
+```
+
+Another possibility would be to rename the column,
+choosing a name that doesn't start by a number :
+
+```{r}
+rna %>%
+  group_by(gene, time) %>%
+  summarise(mean_exp = mean(expression)) %>%
+  pivot_wider(names_from = time,
+              values_from = mean_exp) %>%
+  rename("time0" = `0`, "time4" = `4`, "time8" = `8`) %>%
+  select(gene, time4)
+```
+
+
+:::
+
+::: {.callout-note icon=false}
+
+## Question
+
+Use the previous data frame containing mean expression levels per timepoint and create
+a new column containing fold-changes between timepoint 8 and timepoint 0, and fold-changes
+between timepoint 8 and timepoint 4.
+Convert this table into a long-format table gathering the fold-changes calculated.
+
+:::
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+Starting from the rna\_time tibble:
+
+```{r}
+rna_time
+```
+
+Calculate fold-changes:
+
+```{r}
+rna_time %>%
+  mutate(time_8_vs_0 = `8` / `0`, time_8_vs_4 = `8` / `4`)
+```
+
+And use the pivot\_longer() function:
+
+```{r}
+rna_time %>%
+  mutate(time_8_vs_0 = `8` / `0`, time_8_vs_4 = `8` / `4`) %>%
+  pivot_longer(names_to = "comparisons",
+               values_to = "Fold_changes",
+               time_8_vs_0:time_8_vs_4)
+```
+
+:::
+
+## Joining tables
+
+In many real life situations, data are spread across multiple tables.
+Usually this occurs because different types of information are
+collected from different sources.
+
+It may be desirable for some analyses to combine data from two or more
+tables into a single data frame based on a column that would be common
+to all the tables.
+
+The `dplyr` package provides a set of join functions for combining two
+data frames based on matches within specified columns. Here, we
+provide a short introduction to joins. The
+[Data Transformation Cheat
+Sheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+also provides a short overview on table joins.
+
+We are going to illustrate join using a small table, `rna_mini` that
+we will create by subsetting the original `rna` table, keeping only 3
+columns and 10 lines.
+
+```{r}
+rna_mini <- rna %>%
+   select(gene, sample, expression) %>%
+   head(10)
+rna_mini
+```
+
+The second table, `annot1`, contains 2 columns, gene and
+gene\_description.
+
+```{r, message=FALSE}
+annot1 <- read_csv(file = "data/annot1.csv")
+annot1
+```
+
+We now want to join these two tables into a single one containing all
+variables using the `full_join()` function from the `dplyr` package. The
+function will automatically find the common variable to match columns
+from the first and second table.  In this case, `gene` is the common
+variable. Such variables are called keys. Keys are used to match
+observations across different tables.
+
+```{r}
+full_join(rna_mini, annot1)
+```
+
+In real life, gene annotations are sometimes labelled differently.
+
+The `annot2` table is exactly the same than `annot1` except that the
+variable containing gene names is labelled differently. 
+
+```{r, message=FALSE}
+annot2 <- read_csv(file = "data/annot2.csv")
+```
+
+In case none of the variable names match, we can set manually the
+variables to use for the matching.  These variables can be set using
+the `by` argument, as shown below with `rna_mini` and `annot2` tables.
+
+```{r}
+full_join(rna_mini, annot2, by = c("gene" = "external_gene_name"))
+```
+
+As can be seen above, the variable name of the first table is retained
+in the joined one.
+
+::: {.callout-note icon=false}
+
+## Challenge:
+
+Load in the file `annot3.csv`. Using the `full_join()`
+function, join tables `rna_mini` and `annot3`. What has happened for
+genes *Klk6*, *mt-Tf*, *mt-Rnr1*, *mt-Tv*, *mt-Rnr2*, and *mt-Tl1* ?
+
+:::
+
+::: {.callout-tip icon=false collapse=true}
+
+## Solution
+
+```{r, message=FALSE}
+annot3 <- read_csv("data/annot3.csv")
+full_join(rna_mini, annot3)
+```
+
+Genes *Klk6* is only present in `rna_mini`, while genes *mt-Tf*, *mt-Rnr1*, *mt-Tv*,
+*mt-Rnr2*, and *mt-Tl1* are only present in `annot3` table. Their respective values for the
+variables of the table have been encoded as missing.
+
+:::
+
+## Exporting data
+
+Now that you have learned how to use `dplyr` to extract information from
+or summarise your raw data, you may want to export these new data sets to share
+them with your collaborators or for archival.
+
+Similar to the `read_csv()` function used for reading CSV files into R, there is
+a `write_csv()` function that generates CSV files from data frames.
+
+Before using `write_csv()`, we are going to create a new folder, `data_output`,
+in our working directory that will store this generated dataset. We don't want
+to write generated datasets in the same directory as our raw data.
+It's good practice to keep them separate. The `data` folder should only contain
+the raw, unaltered data, and should be left alone to make sure we don't delete
+or modify it. In contrast, our script will generate the contents of the `data_output`
+directory, so even if the files it contains are deleted, we can always
+re-generate them.
+
+Let's use `write_csv()` to save the rna\_wide table that we have created previously.
+
+```{r, purl=TRUE, eval=FALSE}
+write_csv(rna_wide, file = "data_output/rna_wide.csv")
+```
+
+
+------------------------------------------------------------------------
+
+*The materials in this lesson have been adapted from work created by the (HBC)\](http://bioinformatics.sph.harvard.edu/) and Data Carpentry (http://datacarpentry.org/), as well as materials created by Laurent Gatto, Charlotte Soneson, Jenny Drnevich, Robert Castelo, and Kevin Rue-Albert. These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
