@@ -28,7 +28,7 @@ Instructor learning materials for data analysis module of Research Design and An
 >
 >{{< fa university >}} &nbsp; Senior Bioinformatician, Department of Immunology
 >
-> {{< fa envelope >}} &nbsp; TODO
+> {{< fa envelope >}} &nbsp; <a href="mailto:eren_ada@hms.harvard.edu">eren_ada@hms.harvard.edu</a>
 >
 > **Office Hours**
 > 

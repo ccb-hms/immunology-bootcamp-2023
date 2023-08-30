@@ -38,10 +38,13 @@ website:
             - session-materials/session2/reshaping-and-joining.qmd
         - section: "Session 3"
           contents:
-            - session-materials/session3/session3.qmd
+            - session-materials/session3/Intro-data-viz.qmd
+            - session-materials/session3/Exercise-1.qmd
+            - session-materials/session3/Exercise-2.qmd
         - section: "Session 4"
           contents:
-             - session-materials/session4/session4.qmd
+             - session-materials/session4/Intro-models.qmd
+             - session-materials/session4/A-simple-model.qmd
         
     - title: "Assignments"
       contents:
