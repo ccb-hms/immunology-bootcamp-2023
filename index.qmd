@@ -13,11 +13,9 @@ Instructor learning materials for data analysis module of Research Design and An
 
 {{< fa calendar >}} &nbsp; Sep 5 - Sep 15
 
-{{< fa map-marker >}} &nbsp; TBD
+{{< fa map-marker >}} &nbsp; TMEC 423[^1]
 
-{{< fa video >}} &nbsp; TBD[^1]
-
-[^1]: The zoom link will not be presented on this website since it is public. Please email Chris or Eren if you can't find the Zoom information. 
+[^1]: Sessions will be in-person only. 
 
 ### Instructors {.unnumbered}
 
@@ -32,9 +30,7 @@ Instructor learning materials for data analysis module of Research Design and An
 >
 > **Office Hours**
 > 
-> {{< fa calendar >}} &nbsp; TBD
->
-> {{< fa map-marker >}} &nbsp; TBD
+> {{< fa calendar >}} &nbsp; By Appointment
 
 :::
 
@@ -47,9 +43,8 @@ Instructor learning materials for data analysis module of Research Design and An
 >
 > **Office Hours**
 >
-> {{< fa calendar >}} &nbsp; TBD
->
-> {{< fa map-marker >}} &nbsp; TBD
+> {{< fa calendar >}} &nbsp; By Appointment
+
 
 :::
 
@@ -60,11 +55,11 @@ Instructor learning materials for data analysis module of Research Design and An
 ```{r}
 #| echo: false
 #| message: false
-#library(tidyverse)
-#library(reactable)
-#library(reactablefmtr)
-# Load schedule 
-#sched <- read_csv("schedule.csv")
+library(tidyverse)
+library(reactable)
+library(reactablefmtr)
+#Load schedule
+sched <- read_csv("schedule.csv")
 
-#reactable(select(sched, `Session`, `Date`, `Time`), theme = flatly(), sortable = FALSE)
+reactable(select(sched, `Session`, `Date`, `Time`), theme = flatly(), sortable = FALSE)
 ```

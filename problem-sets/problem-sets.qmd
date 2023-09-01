@@ -5,11 +5,6 @@ page-layout: full
 ---
 # Problem Sets
 
-This is where problem sets will live. 
+The bootcamp will not have problem sets. 
 
-
-<!-- ### Week 2: Getting started with data -->
-<!-- [Download Week 1 Materials Here](https://download-directory.github.io?url=https://github.com/ccb-hms/hsdm-r-course/tree/main/session-materials/session2) -->
-
-<!-- ### Week 3: Data visualization -->
-<!-- [Download Week 2 Materials Here](https://download-directory.github.io?url=https://github.com/ccb-hms/hsdm-r-course/tree/main/session-materials/session3) -->
+Data and examples to work through will be provided for future sessions. 
