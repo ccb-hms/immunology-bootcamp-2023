@@ -45,6 +45,8 @@ website:
           contents:
              - session-materials/session4/Intro-models.qmd
              - session-materials/session4/A-simple-model.qmd
+             - session-materials/session4/model-building.qmd
+            
         
     - title: "Assignments"
       contents:
