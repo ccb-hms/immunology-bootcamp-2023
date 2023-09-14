@@ -43,6 +43,7 @@ website:
             - session-materials/session3/Exercise-2.qmd
         - section: "Session 4"
           contents:
+             - session-materials/session4/t-test.qmd
              - session-materials/session4/Intro-models.qmd
              - session-materials/session4/A-simple-model.qmd
              - session-materials/session4/model-building.qmd
