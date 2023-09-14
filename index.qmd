@@ -59,7 +59,7 @@ library(tidyverse)
 library(reactable)
 library(reactablefmtr)
 #Load schedule
-sched <- read_csv("schedule.csv")
+#sched <- read_csv("schedule.csv")
 
-reactable(select(sched, `Session`, `Date`, `Time`), theme = flatly(), sortable = FALSE)
+#reactable(select(sched, `Session`, `Date`, `Time`), theme = flatly(), sortable = FALSE)
 ```
