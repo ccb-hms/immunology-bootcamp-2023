@@ -11,7 +11,7 @@ The **unpaired two-samples t-test** is used to compare the **mean** of two indep
 
 For example, suppose that we have measured the weight of 100 individuals: 50 female mouse (group A) and 50 male mouse (group B). We want to know if the mean weight of females (mA) is significantly different from that of males (mB)
 
-In this case, we have two unrelated (i.e., independent or unpaired) groups of samples. Therefore, it\'s possible to use an **independent t-test** to evaluate whether the means are different.
+In this case, we have two unrelated (i.e., independent or unpaired) groups of samples. Therefore, it's possible to use an **independent t-test** to evaluate whether the means are different.
 
 ::: callout-caution
 Note that, unpaired two-samples t-test can be used only under certain conditions:
@@ -59,7 +59,7 @@ where,
 
 -   $n_A$ and $n_B$ represent the sizes of the group A and B, respectively.
 
--   $S^2$ is an estimator of the pooled **variance** of the two groups. It can be calculated as follow :
+-   $S^2$ is an estimator of the pooled **variance** of the two groups. It can be calculated as follow:
 
 $$
 S^2 = \frac{\sum{(x-m_A)^2}+\sum{(x-m_B)^2}}{n_A+n_B-2}
@@ -67,7 +67,7 @@ $$
 
 2.  Welch t-statistics
 
-If the variances of the two groups being compared are different (**heteroscedasticity**), it\'s possible to use the **Welch t test**, an adaptation of Student t-test.
+If the variances of the two groups being compared are different (**heteroscedasticity**), it's possible to use the **Welch t test**, an adaptation of Student t-test.
 
 **Welch t-statistic** is calculated as follow :
 
@@ -78,7 +78,7 @@ $$
 are the standard deviation of the the two groups A and B, respectively.
 
 ::: callout-caution
-Unlike the classic Student\'s t-test, **Welch t-test formula** involves the variance of each of the two groups ($S_A^2$ and $S_B^2$) being compared. In other words, it does not use the pooled variance $S$.
+Unlike the classic Student's t-test, **Welch t-test formula** involves the variance of each of the two groups ($S_A^2$ and $S_B^2$) being compared. In other words, it does not use the pooled variance $S$.
 :::
 
 The **degrees of freedom** of **Welch t-test** is estimated as follow :
@@ -118,14 +118,14 @@ To perform two-samples t-test comparing the means of two independent samples (x 
 ::: callout-note
 -   **x,y**: numeric vectors
 
--   **alternative**: the alternative hypothesis. Allowed value is one of \"two.sided\" (default), \"greater\" or \"less\".
+-   **alternative**: the alternative hypothesis. Allowed value is one of "two.sided" (default), "greater" or "less".
 
 -   **var.equal**: a logical variable indicating whether to treat the two variances as being equal. If TRUE then the pooled variance is used to estimate the variance otherwise the Welch test is used.
 :::
 
 ## Import your data into R
 
-Here, we\'ll use an example data set, which contains the weight of 18 individuals (9 females and 9 males):
+Here, we'll use an example data set, which contains the weight of 18 individuals (9 females and 9 males):
 
 ```{r}
 # Data in two numeric vectors
@@ -188,7 +188,7 @@ ggplot(my_data, aes(x=group, y=weight)) + geom_boxplot(aes(color=group))
 
 -   Use Shapiro-Wilk normality test as described at: [Normality Test in R](http://www.sthda.com/english/wiki/normality-test-in-r). - Null hypothesis: the data are normally distributed - Alternative hypothesis: the data are not normally distributed
 
-    We\'ll use the functions **with**() and **shapiro.test**() to compute Shapiro-Wilk test for each group of samples.
+    We'll use the functions **with**() and **shapiro.test**() to compute Shapiro-Wilk test for each group of samples.
 
 ```{r}
 # Shapiro-Wilk normality test for Male's weights
@@ -200,19 +200,19 @@ with(my_data, shapiro.test(weight[group == "Female"])) # p = 0.6
 From the output, the two p-values are greater than the significance level 0.05 implying that the distribution of the data are not significantly different from the normal distribution. In other words, we can assume the normality.
 
 ::: callout-note
-Note that, if the data are not normally distributed, it\'s recommended to use the non parametric two-samples Wilcoxon rank test.
+Note that, if the data are not normally distributed, it's recommended to use the non parametric two-samples Wilcoxon rank test.
 :::
 
 **Assumption 3**. Do the two populations have the same variances?
 
--   We\'ll use **F-test** to test for homogeneity in variances. This can be performed with the function **var.test**() as follow:
+-   We'll use **F-test** to test for homogeneity in variances. This can be performed with the function **var.test**() as follow:
 
 ```{r}
 res.ftest <- var.test(weight ~ group, data = my_data)
 res.ftest
 ```
 
-The p-value of **F-test** is p = 0.1713596. It\'s greater than the significance level alpha = 0.05. In conclusion, there is no significant difference between the variances of the two sets of data. Therefore, we can use the classic **t-test** witch assume equality of **the two variances**.
+The p-value of **F-test** is p = 0.1713596. It's greater than the significance level alpha = 0.05. In conclusion, there is no significant difference between the variances of the two sets of data. Therefore, we can use the classic **t-test** witch assume equality of **the two variances**.
 
 ## Compute unpaired two-samples t-test
 
@@ -268,7 +268,7 @@ t.test(weight ~ group, data = my_data,
 ## Interpretation of the result
 
 ::: callout-note
-The **p-value** of the test is 0.01327, which is less than the significance level alpha = 0.05. We can conclude that male\'s average weight is significantly different from female\'s average weight with a **p-value** = 0.01327.
+The **p-value** of the test is 0.01327, which is less than the significance level alpha = 0.05. We can conclude that male's average weight is significantly different from female's average weight with a **p-value** = 0.01327.
 :::
 
 ## Access to the values returned by t.test() function

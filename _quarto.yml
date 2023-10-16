@@ -48,7 +48,12 @@ website:
              - session-materials/session4/A-simple-model.qmd
              - session-materials/session4/model-building.qmd
              - session-materials/session4/factorial-design.qmd
-        
+        - section: "Session 5"
+          contents:
+              - session-materials/session5/summarized_experiment.qmd
+              - session-materials/session5/de_analysis.qmd
+              - session-materials/session5/enrichment_analysis.qmd
+
     - title: "Assignments"
       contents:
         - problem-sets/problem-sets.qmd
