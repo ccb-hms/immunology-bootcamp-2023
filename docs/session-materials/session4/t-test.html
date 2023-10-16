@@ -308,6 +308,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Session 5</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session5/summarized_experiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with summarized experimental data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session5/de_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differential expression analysis with DESeq2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session5/enrichment_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functional enrichment analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -364,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>What is unpaired two-samples t-test?</h1>
 <p>The <strong>unpaired two-samples t-test</strong> is used to compare the <strong>mean</strong> of two independent groups.</p>
 <p>For example, suppose that we have measured the weight of 100 individuals: 50 female mouse (group A) and 50 male mouse (group B). We want to know if the mean weight of females (mA) is significantly different from that of males (mB)</p>
-<p>In this case, we have two unrelated (i.e., independent or unpaired) groups of samples. Therefore, it's possible to use an <strong>independent t-test</strong> to evaluate whether the means are different.</p>
+<p>In this case, we have two unrelated (i.e., independent or unpaired) groups of samples. Therefore, it’s possible to use an <strong>independent t-test</strong> to evaluate whether the means are different.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -417,7 +446,7 @@ t = \frac{m_A - m_B}{\sqrt{ \frac{S^2}{n_A} + \frac{S^2}{n_B} }}
 <ul>
 <li><p><span class="math inline">\(m_A\)</span> and <span class="math inline">\(m_B\)</span> represent the mean value of the group A and B, respectively.</p></li>
 <li><p><span class="math inline">\(n_A\)</span> and <span class="math inline">\(n_B\)</span> represent the sizes of the group A and B, respectively.</p></li>
-<li><p><span class="math inline">\(S^2\)</span> is an estimator of the pooled <strong>variance</strong> of the two groups. It can be calculated as follow :</p></li>
+<li><p><span class="math inline">\(S^2\)</span> is an estimator of the pooled <strong>variance</strong> of the two groups. It can be calculated as follow:</p></li>
 </ul>
 <p><span class="math display">\[
 S^2 = \frac{\sum{(x-m_A)^2}+\sum{(x-m_B)^2}}{n_A+n_B-2}
@@ -425,7 +454,7 @@ S^2 = \frac{\sum{(x-m_A)^2}+\sum{(x-m_B)^2}}{n_A+n_B-2}
 <ol start="2" type="1">
 <li>Welch t-statistics</li>
 </ol>
-<p>If the variances of the two groups being compared are different (<strong>heteroscedasticity</strong>), it's possible to use the <strong>Welch t test</strong>, an adaptation of Student t-test.</p>
+<p>If the variances of the two groups being compared are different (<strong>heteroscedasticity</strong>), it’s possible to use the <strong>Welch t test</strong>, an adaptation of Student t-test.</p>
 <p><strong>Welch t-statistic</strong> is calculated as follow :</p>
 <p><span class="math display">\[
 t = \frac{m_A - m_B}{\sqrt{ \frac{S_A^2}{n_A} + \frac{S_B^2}{n_B} }}
@@ -441,7 +470,7 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Unlike the classic Student's t-test, <strong>Welch t-test formula</strong> involves the variance of each of the two groups (<span class="math inline">\(S_A^2\)</span> and <span class="math inline">\(S_B^2\)</span>) being compared. In other words, it does not use the pooled variance <span class="math inline">\(S\)</span>.</p>
+<p>Unlike the classic Student’s t-test, <strong>Welch t-test formula</strong> involves the variance of each of the two groups (<span class="math inline">\(S_A^2\)</span> and <span class="math inline">\(S_B^2\)</span>) being compared. In other words, it does not use the pooled variance <span class="math inline">\(S\)</span>.</p>
 </div>
 </div>
 <p>The <strong>degrees of freedom</strong> of <strong>Welch t-test</strong> is estimated as follow :</p>
@@ -514,7 +543,7 @@ Note
 <div class="callout-body-container callout-body">
 <ul>
 <li><p><strong>x,y</strong>: numeric vectors</p></li>
-<li><p><strong>alternative</strong>: the alternative hypothesis. Allowed value is one of "two.sided" (default), "greater" or "less".</p></li>
+<li><p><strong>alternative</strong>: the alternative hypothesis. Allowed value is one of “two.sided” (default), “greater” or “less”.</p></li>
 <li><p><strong>var.equal</strong>: a logical variable indicating whether to treat the two variances as being equal. If TRUE then the pooled variance is used to estimate the variance otherwise the Welch test is used.</p></li>
 </ul>
 </div>
@@ -522,7 +551,7 @@ Note
 </section>
 <section id="import-your-data-into-r" class="level2">
 <h2 data-anchor-id="import-your-data-into-r">Import your data into R</h2>
-<p>Here, we'll use an example data set, which contains the weight of 18 individuals (9 females and 9 males):</p>
+<p>Here, we’ll use an example data set, which contains the weight of 18 individuals (9 females and 9 males):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data in two numeric vectors</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>female_weight <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">38.9</span>, <span class="fl">61.2</span>, <span class="fl">73.3</span>, <span class="fl">21.8</span>, <span class="fl">63.4</span>, <span class="fl">64.6</span>, <span class="fl">48.4</span>, <span class="fl">48.8</span>, <span class="fl">48.5</span>)</span>
@@ -606,9 +635,11 @@ Attaching package: 'dplyr'</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># OR </span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_data, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>weight)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>group))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.3.1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_data, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>weight)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>group))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="t-test_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -623,11 +654,11 @@ Attaching package: 'dplyr'</code></pre>
 <p><strong>Assumtion 2</strong>: Are the data from each of the 2 groups follow a normal distribution?</p>
 <ul>
 <li><p>Use Shapiro-Wilk normality test as described at: <a href="http://www.sthda.com/english/wiki/normality-test-in-r">Normality Test in R</a>. - Null hypothesis: the data are normally distributed - Alternative hypothesis: the data are not normally distributed</p>
-<p>We'll use the functions <strong>with</strong>() and <strong>shapiro.test</strong>() to compute Shapiro-Wilk test for each group of samples.</p></li>
+<p>We’ll use the functions <strong>with</strong>() and <strong>shapiro.test</strong>() to compute Shapiro-Wilk test for each group of samples.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for Male's weights</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(my_data, <span class="fu">shapiro.test</span>(weight[group <span class="sc">==</span> <span class="st">"Male"</span>]))<span class="co"># p = 0.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for Male's weights</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(my_data, <span class="fu">shapiro.test</span>(weight[group <span class="sc">==</span> <span class="st">"Male"</span>]))<span class="co"># p = 0.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -635,8 +666,8 @@ Attaching package: 'dplyr'</code></pre>
 data:  weight[group == "Male"]
 W = 0.86425, p-value = 0.1066</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for Female's weights</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(my_data, <span class="fu">shapiro.test</span>(weight[group <span class="sc">==</span> <span class="st">"Female"</span>])) <span class="co"># p = 0.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test for Female's weights</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(my_data, <span class="fu">shapiro.test</span>(weight[group <span class="sc">==</span> <span class="st">"Female"</span>])) <span class="co"># p = 0.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -656,16 +687,16 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that, if the data are not normally distributed, it's recommended to use the non parametric two-samples Wilcoxon rank test.</p>
+<p>Note that, if the data are not normally distributed, it’s recommended to use the non parametric two-samples Wilcoxon rank test.</p>
 </div>
 </div>
 <p><strong>Assumption 3</strong>. Do the two populations have the same variances?</p>
 <ul>
-<li>We'll use <strong>F-test</strong> to test for homogeneity in variances. This can be performed with the function <strong>var.test</strong>() as follow:</li>
+<li>We’ll use <strong>F-test</strong> to test for homogeneity in variances. This can be performed with the function <strong>var.test</strong>() as follow:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>res.ftest <span class="ot">&lt;-</span> <span class="fu">var.test</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> my_data)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>res.ftest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>res.ftest <span class="ot">&lt;-</span> <span class="fu">var.test</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> my_data)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>res.ftest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     F test to compare two variances
@@ -680,15 +711,15 @@ ratio of variances
           2.767478 </code></pre>
 </div>
 </div>
-<p>The p-value of <strong>F-test</strong> is p = 0.1713596. It's greater than the significance level alpha = 0.05. In conclusion, there is no significant difference between the variances of the two sets of data. Therefore, we can use the classic <strong>t-test</strong> witch assume equality of <strong>the two variances</strong>.</p>
+<p>The p-value of <strong>F-test</strong> is p = 0.1713596. It’s greater than the significance level alpha = 0.05. In conclusion, there is no significant difference between the variances of the two sets of data. Therefore, we can use the classic <strong>t-test</strong> witch assume equality of <strong>the two variances</strong>.</p>
 </section>
 <section id="compute-unpaired-two-samples-t-test" class="level2">
 <h2 data-anchor-id="compute-unpaired-two-samples-t-test">Compute unpaired two-samples t-test</h2>
 <p>Question: Is there any significant difference between female and male weights?</p>
 <p><strong>1) Compute independent t-test - Method 1</strong>: The data are saved in two different numeric vectors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(female_weight, male_weight, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(female_weight, male_weight, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -705,9 +736,9 @@ mean of x mean of y
 </div>
 <p>2) <strong>Compute independent t-test - Method 2</strong>: The data are saved in a data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute t-test</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> my_data, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute t-test</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> my_data, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -757,8 +788,8 @@ Important
 <li>if you want to test whether the average male’s weight is less than the average female’s weight, type this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> my_data,</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> my_data,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -776,8 +807,8 @@ mean in group Female   mean in group Male
 <ul>
 <li><p>Or, if you want to test whether the average male’s weight is greater than the average female’s weight, type this</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> my_data,</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> group, <span class="at">data =</span> my_data,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -808,7 +839,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <strong>p-value</strong> of the test is 0.01327, which is less than the significance level alpha = 0.05. We can conclude that male's average weight is significantly different from female's average weight with a <strong>p-value</strong> = 0.01327.</p>
+<p>The <strong>p-value</strong> of the test is 0.01327, which is less than the significance level alpha = 0.05. We can conclude that male’s average weight is significantly different from female’s average weight with a <strong>p-value</strong> = 0.01327.</p>
 </div>
 </div>
 </section>
@@ -836,23 +867,23 @@ Note
 </div>
 <p>The format of the <strong>R</strong> code to use for getting these values is as follow:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># printing the p-value</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># printing the p-value</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0132656</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># printing the mean</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># printing the mean</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>mean in group Female   mean in group Male 
             52.10000             68.98889 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># printing the confidence interval</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>conf.int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># printing the confidence interval</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>conf.int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -29.748019  -4.029759
 attr(,"conf.level")

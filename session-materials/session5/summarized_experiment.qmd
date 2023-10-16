@@ -11,12 +11,12 @@ The `SummarizedExperiment` object has matrix-like properties -- it has two dimen
 The `SummarizedExperiment` coordinates assays with (optional) descriptions of rows and columns. We start by reading in a simple `data.frame` describing 8 samples from an RNASeq experiment looking at dexamethasone treatment across 4 human smooth muscle cell lines; use `browseVignettes("airway")` for a more complete description of the experiment and data processing. Read the column data in using `file.choose()` and `read.csv()`.
 
 ```{r, eval=FALSE}
-fname <- file.choose()  # airway_colData.csv
-fname
+#fname <- file.choose()  # airway_colData.csv
+#fname
 ```
 
 ```{r, echo=FALSE}
-fname <- "../data/airway_colData.csv"
+fname <- "../session5/data/airway_colData.csv"
 ```
 
 We want the first column the the data to be treated as row names (sample identifiers) in the `data.frame`, so `read.csv()` has an extra argument to indicate this.
@@ -43,7 +43,7 @@ fname
 ```
 
 ```{r, echo=FALSE}
-fname <- "../data/airway_counts.csv"
+fname <- "../session5/data/airway_counts.csv"
 ```
 
 ```{r}

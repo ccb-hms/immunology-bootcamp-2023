@@ -307,6 +307,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Session 5</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session5/summarized_experiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with summarized experimental data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session5/de_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differential expression analysis with DESeq2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session5/enrichment_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Functional enrichment analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -407,16 +436,16 @@ Levels: high low medium</code></pre>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   gene_names expression numeric_expression
-1         Asl       high           805.0567
-2        Apod        low           430.5289
-3     Cyp2d22        low          1793.8829
-4        Klk6     medium          2003.5727
-5       Fcrls       high          2201.2077
-6      Slc2a4     medium           971.4659
-7        Exd2     medium          1512.0073
-8        Gjc2        low          1214.7636
-9        Plp1        low          1947.9758
-10       Gnb4        low          -507.4867</code></pre>
+1         Asl       high         3404.67183
+2        Apod        low        -1143.21570
+3     Cyp2d22        low         1313.94542
+4        Klk6     medium         1960.19986
+5       Fcrls       high         1703.98093
+6      Slc2a4     medium         1518.11575
+7        Exd2     medium         2093.84144
+8        Gjc2        low         1683.19266
+9        Plp1        low         1295.98191
+10       Gnb4        low           54.82772</code></pre>
 </div>
 </div>
 </section>
@@ -440,16 +469,16 @@ Levels: low medium high
 
 [[2]]
    gene_names expression numeric_expression
-1         Asl       high           805.0567
-2        Apod        low           430.5289
-3     Cyp2d22        low          1793.8829
-4        Klk6     medium          2003.5727
-5       Fcrls       high          2201.2077
-6      Slc2a4     medium           971.4659
-7        Exd2     medium          1512.0073
-8        Gjc2        low          1214.7636
-9        Plp1        low          1947.9758
-10       Gnb4        low          -507.4867
+1         Asl       high         3404.67183
+2        Apod        low        -1143.21570
+3     Cyp2d22        low         1313.94542
+4        Klk6     medium         1960.19986
+5       Fcrls       high         1703.98093
+6      Slc2a4     medium         1518.11575
+7        Exd2     medium         2093.84144
+8        Gjc2        low         1683.19266
+9        Plp1        low         1295.98191
+10       Gnb4        low           54.82772
 
 [[3]]
 [1] 102</code></pre>
