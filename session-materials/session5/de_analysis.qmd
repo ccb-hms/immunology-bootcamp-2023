@@ -16,7 +16,7 @@ The [airway](https://bioconductor.org/packages/airway) experimental data package
 library(airway)
 data(airway)
 se <- airway
-
+se
 rowRanges(se)
 colData(se)
 ```
@@ -35,7 +35,7 @@ There are two reasons which make pre-filtering useful: by removing genes with on
 Here we perform a minimal pre-filtering to keep only rows that have at least 10 reads total.
 
 ```{r}
-keep <- rowSums(counts(dds)) >= 4
+keep <- rowSums(counts(dds)) >= 10
 table(keep)
 dds <- dds[keep,]
 ```

@@ -2,7 +2,7 @@
 
 This section introduces another broadly useful package and data structure, the [SummarizedExperiment](https://bioconductor.org/packages/SummarizedExperiment) package and `SummarizedExperiment` object.
 
-![](../img/SummarizedExperiment.png)
+![](img/SummarizedExperiment.png)
 
 The `SummarizedExperiment` object has matrix-like properties -- it has two dimensions and can be subset by 'rows' and 'columns'. The `assay()` data of a `SummarizedExperiment` experiment contains one or more matrix-like objects where rows represent features of interest (e.g., genes), columns represent samples, and elements of the matrix represent results of a genomic assay (e.g., counts of reads overlaps genes in each sample of an bulk RNA-seq differential expression assay.
 
@@ -67,7 +67,7 @@ It's interesting to think about what the counts mean -- for ENSG00000000003, sam
 
 **Creating a `SummarizedExperiment` object**
 
-We saw earlier that there was considerable value in tightly coupling the count of CpG islands overlapping each transcript with the `GRanges` describing the transcripts. We can anticipate that close coupling of the column data with the assay data will have similar benefits, e.g., reducing the chances of bookkeeping errors as we work with our data.
+There is considerable value in tightly coupling of the column data with the assay data, as it reduces the chances of bookkeeping errors as we work with our data.
 
 Attach the [SummarizedExperiment](https://bioconductor.org/packages/SummarizedExperiment) library to our *R* session.
 

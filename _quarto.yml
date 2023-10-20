@@ -52,7 +52,6 @@ website:
           contents:
               - session-materials/session5/summarized_experiment.qmd
               - session-materials/session5/de_analysis.qmd
-              - session-materials/session5/enrichment_analysis.qmd
 
     - title: "Assignments"
       contents:
