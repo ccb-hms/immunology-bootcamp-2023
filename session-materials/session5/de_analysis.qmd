@@ -6,6 +6,7 @@ We start by loading the [DESeq2](https://bioconductor.org/packages/DESeq2) packa
 
 ```{r, message=FALSE}
 library("DESeq2")
+library(tidyverse)
 ```
 
 [DESeq2](https://bioconductor.org/packages/DESeq2) requires count data like that in the `SummarizedExperiment` we have been working with.
@@ -78,6 +79,29 @@ ggplot(as.data.frame(res),
   geom_vline(xintercept = -1, col = "red") +
   geom_vline(xintercept = 1, col = "red")
 ```
+
+
+We can get more advanced with creating volcano plots, labeling cells with things like the 
+
+```{r}
+library(ggrepel) #This is a good library for displaying text without overlap
+library(biomaRt, quietly = TRUE) #for ID mapping
+
+as.data.frame(res)
+mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
+genes <- rownames(res)
+gene_map <- getBM(filters= "ensembl_gene_id", attributes= c("ensembl_gene_id","hgnc_symbol"),values=genes,mart= mart)
+ind <- match(rownames(res), gene_map$ensembl_gene_id)
+res$gene <- gene_map$hgnc_symbol[ind]
+
+res <- mutate(res, sig = ((padj < 0.05) & abs(log2FoldChange) > 2)) 
+  ggplot(res, aes(x = log2FoldChange, y = -log10(padj), col=sig)) +
+       geom_point() +
+       geom_vline(xintercept=c(-2, 2), col="red") +
+       geom_hline(yintercept=-log10(0.05), col="red") +
+       geom_text_repel(data=filter(res, sig), aes(label=gene))
+```
+
 
 ## MA plot
 
