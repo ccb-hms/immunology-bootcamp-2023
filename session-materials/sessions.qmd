@@ -24,3 +24,6 @@ You can browse the materials for each Session on this website, but for class you
 ### Session 5: Bulk RNA-seq
 [Download Session 5 Materials Here](https://download-directory.github.io?url=https://github.com/ccb-hms/immunology-bootcamp-2023/tree/main/session-materials/session5)
 
+### Session 6 & 7: scRNA-seq
+For session 6 we will be working from the materials [found here](https://www.singlecellcourse.org/) and data [found here](https://singlecellcourse.cog.sanger.ac.uk/index.html?shared=data/update/)
+

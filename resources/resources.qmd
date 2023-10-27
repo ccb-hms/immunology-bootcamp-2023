@@ -39,6 +39,12 @@ This is an online R resource specifically for [Excel users](https://jules32.gith
 
 ### Topic-Specific Resources
 
+#### scRNA seq
+
+- [Single cell course materials](https://www.singlecellcourse.org/)
+- [Offical Seurat tutorials](https://satijalab.org/seurat/) such as [Using sctransform in Seurat](https://satijalab.org/seurat/articles/sctransform_vignette.html) and [Cell-Cycle Scoring and Regression](https://satijalab.org/seurat/archive/v3.1/cell_cycle_vignette.html)
+- [Extensive list of packages for single-cell analysis](https://github.com/seandavi/awesome-single-cell#awesome-single-cell)
+
 #### RMarkdown and Quarto
 
 - [The definitive R Markdown guide](https://bookdown.org/yihui/rmarkdown/notebook.html)
