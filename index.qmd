@@ -34,6 +34,11 @@ Instructor learning materials for data analysis module of Research Design and An
 
 :::
 
+:::
+
+:::
+
+
 ## Schedule
 
 ```{r message=FALSE, warning=FALSE}
