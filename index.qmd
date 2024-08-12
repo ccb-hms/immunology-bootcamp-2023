@@ -49,17 +49,3 @@ Instructor learning materials for data analysis module of Research Design and An
 :::
 
 :::
-
-## Schedule
-
-```{r}
-#| echo: false
-#| message: false
-library(tidyverse)
-library(reactable)
-library(reactablefmtr)
-#Load schedule
-sched <- read_csv("schedule.csv")
-
-reactable(select(sched, `Session`, `Date`, `Time`), theme = flatly(), sortable = FALSE)
-```
