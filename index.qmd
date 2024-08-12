@@ -32,6 +32,7 @@ Instructor learning materials for data analysis module of Research Design and An
 > 
 > {{< fa calendar >}} &nbsp; By Appointment
 
+:::
 
 ## Schedule
 
