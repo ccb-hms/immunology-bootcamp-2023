@@ -34,8 +34,9 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 > 
 > {{< fa calendar >}} &nbsp; By Appointment
 
-:::
 ::: {.column width="50%"}
+
+### Teaching Assistant {.unnumbered}
 
 ##### {{< fa user >}} &nbsp; Jessica Frank
 >
