@@ -30,6 +30,11 @@ This material is prepared through collaboration between Core for Computational B
 >
 > {{< fa envelope >}} &nbsp; <a href="mailto:eren_ada@hms.harvard.edu">eren_ada@hms.harvard.edu</a>
 >
+> **Office Hours**
+> 
+> {{< fa calendar >}} &nbsp; By Appointment
+
+:::
 ::: {.column width="50%"}
 
 ##### {{< fa user >}} &nbsp; Jessica Frank
@@ -42,8 +47,6 @@ This material is prepared through collaboration between Core for Computational B
 > **Office Hours**
 > 
 > {{< fa calendar >}} &nbsp; By Appointment
-
-:::
 
 :::
 
