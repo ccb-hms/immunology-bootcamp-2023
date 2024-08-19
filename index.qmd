@@ -35,22 +35,22 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 > {{< fa calendar >}} &nbsp; By Appointment
 
 :::
+::: {.column width="50%"}
 
-##### {{< fa user >}} &nbsp; Jessica Frank
+##### {{< fa user >}} &nbsp; Jessica Frank, Teaching Assistant
 >
 >{{< fa university >}} PhD Student at Immunology, HMS
 >
 > {{< fa envelope >}} &nbsp; <a href="mailto:jfrank@g.harvard.edu">jfrank@g.harvard.edu</a>
 
-
 > **Office Hours**
 > 
 > {{< fa calendar >}} &nbsp; By Appointment
 
-:::
 
 :::
 
+:::
 
 ## Schedule
 
