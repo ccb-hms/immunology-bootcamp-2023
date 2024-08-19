@@ -19,7 +19,7 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 
 [^1]: Sessions will be in-person only. 
 
-### Instructors {.unnumbered}
+### Instructor {.unnumbered}
 
 :::: {.columns}
 
@@ -34,10 +34,10 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 > 
 > {{< fa calendar >}} &nbsp; By Appointment
 
-::: {.column width="50%"}
 
 ### Teaching Assistant {.unnumbered}
 
+::: {.column width="50%"}
 ##### {{< fa user >}} &nbsp; Jessica Frank
 >
 >{{< fa university >}} PhD Student at Immunology, HMS
