@@ -1,8 +1,12 @@
-Session,Date,Time
-R Basics,3-Sep,9:00am - 11:00am
-Functions and Data Wrangling,5-Sep,9:00am - 11:00am
-Data Visualization,10-Sep,9:00am - 11:00am
-Introduction to Models,12-Sep,9:00am - 11:00am
+Session,Date,Time,Location
+R Basics,2-Sep,9:00am - 11:00am,TMEC 338
+Functions and Data Wrangling,4-Sep,9:00am - 11:00am,TMEC 338
+Data Visualization,9-Sep,9:00am - 11:00am,TMEC 338
+Introduction to Models,11-Sep,9:00am - 11:00am,TMEC 338
+Bulk RNA-seq,3-Oct,10:30am - 12:30pm,TMEC 338
+scRNA-seq Part 1,10-Oct,10:30am - 12:30pm,TMEC 338
+scRNA-seq Part 2,17-Oct,10:30am - 12:30pm,TMEC 338
+Final Project Presentations,21-Nov,10:30am - 1:00pm,TMEC 443
 ,,
 ,,
 ,,
