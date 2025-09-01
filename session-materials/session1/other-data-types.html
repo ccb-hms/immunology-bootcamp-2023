@@ -614,16 +614,16 @@ Levels: high low medium</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   gene_names expression numeric_expression
-1         Asl       high          5339.5045
-2        Apod        low          1773.9944
-3     Cyp2d22        low           901.9123
-4        Klk6     medium          1839.8183
-5       Fcrls       high          3475.8245
-6      Slc2a4     medium          3400.1863
-7        Exd2     medium          1389.3358
-8        Gjc2        low           358.2502
-9        Plp1        low          1850.7915
-10       Gnb4        low           707.8726</code></pre>
+1         Asl       high          4008.6581
+2        Apod        low          2563.7517
+3     Cyp2d22        low          2071.1672
+4        Klk6     medium          1733.8999
+5       Fcrls       high          5319.8489
+6      Slc2a4     medium          1217.5867
+7        Exd2     medium          1657.0175
+8        Gjc2        low          1713.7790
+9        Plp1        low          1031.8463
+10       Gnb4        low           405.8497</code></pre>
 </div>
 </div>
 </section>
@@ -647,16 +647,16 @@ Levels: low medium high
 
 [[2]]
    gene_names expression numeric_expression
-1         Asl       high          5339.5045
-2        Apod        low          1773.9944
-3     Cyp2d22        low           901.9123
-4        Klk6     medium          1839.8183
-5       Fcrls       high          3475.8245
-6      Slc2a4     medium          3400.1863
-7        Exd2     medium          1389.3358
-8        Gjc2        low           358.2502
-9        Plp1        low          1850.7915
-10       Gnb4        low           707.8726
+1         Asl       high          4008.6581
+2        Apod        low          2563.7517
+3     Cyp2d22        low          2071.1672
+4        Klk6     medium          1733.8999
+5       Fcrls       high          5319.8489
+6      Slc2a4     medium          1217.5867
+7        Exd2     medium          1657.0175
+8        Gjc2        low          1713.7790
+9        Plp1        low          1031.8463
+10       Gnb4        low           405.8497
 
 [[3]]
 [1] 102</code></pre>
@@ -749,7 +749,7 @@ Levels: low medium high
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/ccb-hms\.github\.io\/immunology-bootcamp-2023\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
