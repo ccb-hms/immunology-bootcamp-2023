@@ -23,7 +23,7 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 
 :::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="25%"}
 ##### {{< fa user >}} &nbsp; Eren Ada, PhD
 >
 >{{< fa university >}} &nbsp; Research Associate in Immunology, Department of Immunology
@@ -36,7 +36,7 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="25%"}
 ##### {{< fa user >}} &nbsp; Martin Hemberg, PhD
 >
 >{{< fa university >}} &nbsp; Associate Professor of Neurology and Immunology, Harvard Medical School
@@ -49,7 +49,7 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="25%"}
 ##### {{< fa user >}} &nbsp; Nir Hacohen, PhD
 >
 >{{< fa university >}} &nbsp; Professor of Medicine, Harvard Medical School
@@ -62,7 +62,7 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="25%"}
 
 ##### {{< fa user >}} &nbsp; Daniela D. Russo, Teaching Assistant
 >
