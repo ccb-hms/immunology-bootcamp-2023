@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Eren Ada, PhD">
+<meta name="dcterms.date" content="2025-09-09">
+
+<title>Session 4: t-tests and Visualization – Systems Immunology Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-80f179d829f1c8f84f528aeb74bc991b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-42af0f19a1edc56f631791d5280476d7.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Systems Immunology Bootcamp</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../session-materials/sessions.html" aria-current="page"> 
+<span class="menu-text">In-Class Materials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../problem-sets/problem-sets.html"> 
+<span class="menu-text">Assignments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resources/resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/basic-stats.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/t-tests-and-viz.html">Session 4: t-tests and Visualization</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/sessions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Session 1</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session1/objects-and-functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables and Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session1/vectors-and-conditionals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Vectors, Types, and Conditional Statements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session1/missing-data-and-generators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Missing Data and Generators</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session1/other-data-types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Other Base R Types</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Session 2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session2/making-functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session2/loops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">For loops</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session2/tidyverse-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Tidyverse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session2/split-apply-combine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Split-Apply-Combine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session2/reshaping-and-joining.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reshaping and Joining Data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Session 3</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session3/Intro-data-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 3: Data Visualization in R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session3/Exercise-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise-1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session3/Exercise-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise-2: Boxplot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Session 4</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session4/basic-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: Foundational Statistics for t-tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session4/immunology-simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: Simulating Immunology Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session4/t-tests-and-viz.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Session 4: t-tests and Visualization</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Session 5</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session5/summarized_experiment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with summarized experimental data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session5/de_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differential expression analysis with DESeq2</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#the-unpaired-t-test-control-vs.-vaccine" id="toc-the-unpaired-t-test-control-vs.-vaccine" class="nav-link" data-scroll-target="#the-unpaired-t-test-control-vs.-vaccine">1. The Unpaired t-test: Control vs.&nbsp;Vaccine</a>
+  <ul class="collapse">
+  <li><a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions">Checking Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#independence-check" id="toc-independence-check" class="nav-link" data-scroll-target="#independence-check">1. Independence Check</a></li>
+  <li><a href="#normality-check" id="toc-normality-check" class="nav-link" data-scroll-target="#normality-check">2. Normality Check</a></li>
+  <li><a href="#homogeneity-of-variances-check" id="toc-homogeneity-of-variances-check" class="nav-link" data-scroll-target="#homogeneity-of-variances-check">3. Homogeneity of Variances Check</a></li>
+  </ul></li>
+  <li><a href="#performing-the-t-test" id="toc-performing-the-t-test" class="nav-link" data-scroll-target="#performing-the-t-test">Performing the t-test</a>
+  <ul class="collapse">
+  <li><a href="#understanding-t-test-types" id="toc-understanding-t-test-types" class="nav-link" data-scroll-target="#understanding-t-test-types">Understanding t-test Types</a></li>
+  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
+  <li><a href="#calculate-effect-size-cohens-d" id="toc-calculate-effect-size-cohens-d" class="nav-link" data-scroll-target="#calculate-effect-size-cohens-d">Calculate Effect Size (Cohen’s d)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#the-paired-t-test-pre-vs.-post-vaccination" id="toc-the-paired-t-test-pre-vs.-post-vaccination" class="nav-link" data-scroll-target="#the-paired-t-test-pre-vs.-post-vaccination">2. The Paired t-test: Pre vs.&nbsp;Post Vaccination</a>
+  <ul class="collapse">
+  <li><a href="#checking-assumptions-1" id="toc-checking-assumptions-1" class="nav-link" data-scroll-target="#checking-assumptions-1">Checking Assumptions</a></li>
+  <li><a href="#performing-the-paired-t-test" id="toc-performing-the-paired-t-test" class="nav-link" data-scroll-target="#performing-the-paired-t-test">Performing the Paired t-test</a>
+  <ul class="collapse">
+  <li><a href="#understanding-paired-t-test-output" id="toc-understanding-paired-t-test-output" class="nav-link" data-scroll-target="#understanding-paired-t-test-output">Understanding Paired t-test Output</a></li>
+  <li><a href="#calculate-effect-size-for-paired-data-cohens-dz" id="toc-calculate-effect-size-for-paired-data-cohens-dz" class="nav-link" data-scroll-target="#calculate-effect-size-for-paired-data-cohens-dz">Calculate Effect Size for Paired Data (Cohen’s dz)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#publication-quality-visualization" id="toc-publication-quality-visualization" class="nav-link" data-scroll-target="#publication-quality-visualization">3. Publication-Quality Visualization</a>
+  <ul class="collapse">
+  <li><a href="#unpaired-data-figure" id="toc-unpaired-data-figure" class="nav-link" data-scroll-target="#unpaired-data-figure">Unpaired Data Figure</a></li>
+  <li><a href="#paired-data-figure" id="toc-paired-data-figure" class="nav-link" data-scroll-target="#paired-data-figure">Paired Data Figure</a></li>
+  </ul></li>
+  <li><a href="#writing-professional-results" id="toc-writing-professional-results" class="nav-link" data-scroll-target="#writing-professional-results">4. Writing Professional Results</a>
+  <ul class="collapse">
+  <li><a href="#example-results-paragraphs" id="toc-example-results-paragraphs" class="nav-link" data-scroll-target="#example-results-paragraphs">Example Results Paragraphs</a>
+  <ul class="collapse">
+  <li><a href="#for-the-unpaired-analysis" id="toc-for-the-unpaired-analysis" class="nav-link" data-scroll-target="#for-the-unpaired-analysis">For the Unpaired Analysis:</a></li>
+  <li><a href="#for-the-paired-analysis" id="toc-for-the-paired-analysis" class="nav-link" data-scroll-target="#for-the-paired-analysis">For the Paired Analysis:</a></li>
+  </ul></li>
+  <li><a href="#when-assumptions-are-violated" id="toc-when-assumptions-are-violated" class="nav-link" data-scroll-target="#when-assumptions-are-violated">When Assumptions Are Violated</a>
+  <ul class="collapse">
+  <li><a href="#non-parametric-tests" id="toc-non-parametric-tests" class="nav-link" data-scroll-target="#non-parametric-tests">Non-parametric Tests</a></li>
+  <li><a href="#guidelines-for-choosing-tests" id="toc-guidelines-for-choosing-tests" class="nav-link" data-scroll-target="#guidelines-for-choosing-tests">Guidelines for Choosing Tests</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#summary-and-best-practices" id="toc-summary-and-best-practices" class="nav-link" data-scroll-target="#summary-and-best-practices">5. Summary and Best Practices</a>
+  <ul class="collapse">
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#practice-exercises" id="toc-practice-exercises" class="nav-link" data-scroll-target="#practice-exercises">Practice Exercises</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/basic-stats.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/t-tests-and-viz.html">Session 4: t-tests and Visualization</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Session 4: t-tests and Visualization</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Eren Ada, PhD </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 9, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This document walks through performing, interpreting, and visualizing t-tests using simulated immunology data. We will cover:</p>
+<ol type="1">
+<li><strong>Checking Assumptions</strong>: Ensuring the t-test is appropriate</li>
+<li><strong>Unpaired t-test</strong>: Comparing antibody titers between Control and Vaccine groups</li>
+<li><strong>Paired t-test</strong>: Comparing Pre- and Post-vaccination titers</li>
+<li><strong>Visualization</strong>: Creating publication-quality figures</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages for data manipulation, visualization, and statistical testing</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># For data manipulation (dplyr) and visualization (ggplot2)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)        <span class="co"># For Levene's test (variance equality)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed to ensure reproducible random number generation</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># This means anyone running this code will get the exact same results</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate example immunology data for demonstration</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Unpaired data: Control vs Vaccine groups (different subjects)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>n_control <span class="ot">&lt;-</span> <span class="dv">20</span>                                                                <span class="co"># Number of control subjects</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>n_vax <span class="ot">&lt;-</span> <span class="dv">20</span>                                                                    <span class="co"># Number of vaccinated subjects</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>control_titer <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_control, <span class="at">mean =</span> <span class="dv">200</span>, <span class="at">sd =</span> <span class="dv">60</span>)                        <span class="co"># Control group antibody titers</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>vax_titer <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_vax, <span class="at">mean =</span> <span class="dv">320</span>, <span class="at">sd =</span> <span class="dv">80</span>)                                <span class="co"># Vaccine group: higher mean, more variable</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine into a tidy data frame for analysis</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>dat_unpaired <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Control"</span>,<span class="st">"Vaccine"</span>), <span class="fu">c</span>(n_control, n_vax)),                   <span class="co"># Group labels</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">titer =</span> <span class="fu">c</span>(control_titer, vax_titer)                                          <span class="co"># All titer measurements</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired data: Pre vs Post vaccination (same subjects measured twice)</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>                                                                        <span class="co"># Number of subjects</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>pre <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">200</span>, <span class="at">sd =</span> <span class="dv">60</span>)                                          <span class="co"># Baseline titers before vaccination</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>true_boost <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">120</span>, <span class="at">sd =</span> <span class="dv">40</span>)                                   <span class="co"># Individual vaccine response varies</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> pre <span class="sc">+</span> true_boost                                                      <span class="co"># Post-vaccination = baseline + boost</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Create paired data frame</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>dat_paired <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">seq_len</span>(n),                                                            <span class="co"># Subject identifier</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">pre =</span> pre,                                                                   <span class="co"># Pre-vaccination titers</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">post =</span> post,                                                                 <span class="co"># Post-vaccination titers</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">diff =</span> post <span class="sc">-</span> pre                                                            <span class="co"># Change for each subject</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="the-unpaired-t-test-control-vs.-vaccine" class="level1">
+<h1>1. The Unpaired t-test: Control vs.&nbsp;Vaccine</h1>
+<section id="checking-assumptions" class="level2">
+<h2 data-anchor-id="checking-assumptions">Checking Assumptions</h2>
+<p>Before running any t-test, we must verify that our data meets the required assumptions. Violating these assumptions can lead to incorrect conclusions.</p>
+<p>A t-test has three main assumptions:</p>
+<ol type="1">
+<li><strong>Independence</strong>: Observations in one group are independent of the other (and within groups)</li>
+<li><strong>Normality</strong>: Data in each group are approximately normally distributed<br>
+</li>
+<li><strong>Homogeneity of Variances</strong>: The two groups have similar variances (for Student’s t-test)</li>
+</ol>
+<p>Let’s check each assumption systematically.</p>
+<section id="independence-check" class="level3">
+<h3 data-anchor-id="independence-check">1. Independence Check</h3>
+<p><strong>Independence</strong> means that: - Each subject’s measurement doesn’t influence another subject’s measurement - Observations within each group are independent - The two groups are independent of each other</p>
+<p>In our case, this is satisfied by our experimental design (different subjects in each group, no repeated measures).</p>
+</section>
+<section id="normality-check" class="level3">
+<h3 data-anchor-id="normality-check">2. Normality Check</h3>
+<p><strong>Q-Q plots</strong> (quantile-quantile plots) help us assess if our data follows a normal distribution: - If data is normal, points should fall close to the diagonal line - Systematic deviations suggest non-normality - Small deviations are usually acceptable, especially with moderate sample sizes</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Q-Q plots to check normality assumption for each group</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_unpaired, <span class="fu">aes</span>(<span class="at">sample =</span> titer, <span class="at">color =</span> group)) <span class="sc">+</span>                     <span class="co"># Map titer to sample quantiles, color by group</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span>                                                                  <span class="co"># Add Q-Q points</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span>                                                             <span class="co"># Add reference line for perfect normality</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>group, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span>                                        <span class="co"># Separate plot for each group</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q-Q Plots for Normality Check"</span>,                               <span class="co"># Add informative title</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Points should fall close to the line if data is normal"</span>) <span class="sc">+</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()                                                              <span class="co"># Clean theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="t-tests-and-viz_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretation</strong>: The points fall close to the line for both groups, suggesting the normality assumption is reasonable. Minor deviations at the extremes are common and acceptable.</p>
+</section>
+<section id="homogeneity-of-variances-check" class="level3">
+<h3 data-anchor-id="homogeneity-of-variances-check">3. Homogeneity of Variances Check</h3>
+<p>We need to check if the two groups have similar variances. We can do this visually and with a formal test.</p>
+<section id="visual-check-compare-spreads" class="level4">
+<h4 data-anchor-id="visual-check-compare-spreads">Visual Check: Compare Spreads</h4>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visual comparison of variances using boxplots</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_unpaired, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> titer, <span class="at">fill =</span> group)) <span class="sc">+</span>               <span class="co"># Map group to x, titer to y</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span>                                                 <span class="co"># Create boxplots to compare spreads</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span>                                     <span class="co"># Add individual points</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparing Variances Between Groups"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Look for similar box heights and whisker lengths"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Group"</span>, <span class="at">y =</span> <span class="st">"Antibody Titer (AU)"</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="t-tests-and-viz_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and display group variances</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dat_unpaired <span class="sc">|&gt;</span>                                                               <span class="co"># Start with our data</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span>                                                          <span class="co"># Group by Control vs Vaccine</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(                                                                  <span class="co"># Calculate variance statistics</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),                                                                  <span class="co"># Sample size</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">variance =</span> <span class="fu">var</span>(titer),                                                    <span class="co"># Variance</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(titer),                                                           <span class="co"># Standard deviation</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span>                                                          <span class="co"># Remove grouping</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>, <span class="at">caption =</span> <span class="st">"Variance Comparison"</span>)                   <span class="co"># Create formatted table</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Variance Comparison</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">group</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">variance</th>
+<th style="text-align: right;">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Control</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">6202.8</td>
+<td style="text-align: right;">78.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Vaccine</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">7880.5</td>
+<td style="text-align: right;">88.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="formal-test-levenes-test" class="level4">
+<h4 data-anchor-id="formal-test-levenes-test">Formal Test: Levene’s Test</h4>
+<p><strong>Levene’s test</strong> formally tests for equal variances: - H₀: Variances are equal - Ha: Variances are different - If p &gt; 0.05, we don’t reject H₀ (variances likely equal)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Levene's test for equality of variances</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>levene_result <span class="ot">&lt;-</span> <span class="fu">leveneTest</span>(titer <span class="sc">~</span> group, <span class="at">data =</span> dat_unpaired)              <span class="co"># Test variance equality</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in leveneTest.default(y = y, group = group, ...): group coerced to
+factor.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>levene_result                                                                <span class="co"># Display results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  1  0.3088 0.5817
+      38               </code></pre>
+</div>
+</div>
+<p><strong>Decision Rule</strong>: - If variances are equal (Levene’s p &gt; 0.05): Can use Student’s t-test - If variances are unequal (Levene’s p ≤ 0.05): Should use Welch’s t-test - <strong>Default recommendation</strong>: Use Welch’s t-test (it works well in both cases)</p>
+</section>
+</section>
+</section>
+<section id="performing-the-t-test" class="level2">
+<h2 data-anchor-id="performing-the-t-test">Performing the t-test</h2>
+<p>Now we’ll run the actual t-test. We’ll use <strong>Welch’s t-test</strong> (the default in R) because it’s more robust and doesn’t assume equal variances.</p>
+<section id="understanding-t-test-types" class="level3">
+<h3 data-anchor-id="understanding-t-test-types">Understanding t-test Types</h3>
+<ul>
+<li><strong>Student’s t-test</strong> (<code>var.equal = TRUE</code>): Assumes equal variances</li>
+<li><strong>Welch’s t-test</strong> (<code>var.equal = FALSE</code>, default): Doesn’t assume equal variances</li>
+<li><strong>Welch’s test is generally preferred</strong> as it performs well even when variances are equal</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch's two-sample t-test (default, safer choice)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>unpaired_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(titer <span class="sc">~</span> group, <span class="at">data =</span> dat_unpaired)                   <span class="co"># Perform Welch's t-test</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>unpaired_test                                                                 <span class="co"># Display full results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  titer by group
+t = -3.2712, df = 37.468, p-value = 0.002303
+alternative hypothesis: true difference in means between group Control and group Vaccine is not equal to 0
+95 percent confidence interval:
+ -140.55004  -33.06087
+sample estimates:
+mean in group Control mean in group Vaccine 
+             211.5152              298.3207 </code></pre>
+</div>
+</div>
+</section>
+<section id="understanding-the-output" class="level3">
+<h3 data-anchor-id="understanding-the-output">Understanding the Output</h3>
+<p>Let’s break down each part of the t-test output:</p>
+<ul>
+<li><strong><code>t</code></strong>: The t-statistic (how many standard errors the difference is from zero)</li>
+<li><strong><code>df</code></strong>: Degrees of freedom (affects the p-value calculation)</li>
+<li><strong><code>p-value</code></strong>: Probability of seeing this result (or more extreme) if H₀ were true</li>
+<li><strong><code>95% confidence interval</code></strong>: Range of plausible values for the true difference</li>
+<li><strong><code>sample estimates</code></strong>: Mean values for each group</li>
+</ul>
+</section>
+<section id="calculate-effect-size-cohens-d" class="level3">
+<h3 data-anchor-id="calculate-effect-size-cohens-d">Calculate Effect Size (Cohen’s d)</h3>
+<p><strong>Effect size</strong> tells us how meaningful the difference is, not just whether it’s statistically significant.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Cohen's d manually for unpaired data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>group_stats <span class="ot">&lt;-</span> dat_unpaired <span class="sc">|&gt;</span>                                               <span class="co"># Start with our data</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span>                                                          <span class="co"># Group by Control vs Vaccine</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(                                                                  <span class="co"># Calculate group statistics</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),                                                                  <span class="co"># Sample size</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(titer),                                                       <span class="co"># Group mean</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(titer),                                                           <span class="co"># Group standard deviation</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span>                                                          <span class="co"># Remove grouping</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract values for Cohen's d calculation</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>control_stats <span class="ot">&lt;-</span> group_stats <span class="sc">|&gt;</span> <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">"Control"</span>)                   <span class="co"># Control group statistics</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>vaccine_stats <span class="ot">&lt;-</span> group_stats <span class="sc">|&gt;</span> <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">"Vaccine"</span>)                   <span class="co"># Vaccine group statistics</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate pooled standard deviation</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>pooled_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((control_stats<span class="sc">$</span>n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> control_stats<span class="sc">$</span>sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                   (vaccine_stats<span class="sc">$</span>n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> vaccine_stats<span class="sc">$</span>sd<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                  (control_stats<span class="sc">$</span>n <span class="sc">+</span> vaccine_stats<span class="sc">$</span>n <span class="sc">-</span> <span class="dv">2</span>))                    <span class="co"># Pooled SD formula</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Cohen's d</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="ot">&lt;-</span> (vaccine_stats<span class="sc">$</span>mean <span class="sc">-</span> control_stats<span class="sc">$</span>mean) <span class="sc">/</span> pooled_sd            <span class="co"># Effect size calculation</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cohen's d ="</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>))                                       <span class="co"># Display result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cohen's d = 1.03</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Interpretation:"</span>, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">abs</span>(cohens_d) <span class="sc">&lt;</span> <span class="fl">0.2</span>) <span class="st">"Negligible effect"</span> <span class="cf">else</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">abs</span>(cohens_d) <span class="sc">&lt;</span> <span class="fl">0.5</span>) <span class="st">"Small effect"</span> <span class="cf">else</span>  </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">abs</span>(cohens_d) <span class="sc">&lt;</span> <span class="fl">0.8</span>) <span class="st">"Medium effect"</span> <span class="cf">else</span> <span class="st">"Large effect"</span>)             <span class="co"># Interpret magnitude</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Interpretation: Large effect</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="the-paired-t-test-pre-vs.-post-vaccination" class="level1">
+<h1>2. The Paired t-test: Pre vs.&nbsp;Post Vaccination</h1>
+<p><strong>Paired t-tests</strong> are used when we have two measurements from the same subjects. This is more powerful than unpaired tests because it controls for individual differences.</p>
+<section id="checking-assumptions-1" class="level2">
+<h2 data-anchor-id="checking-assumptions-1">Checking Assumptions</h2>
+<p>For paired data, the key assumptions are:</p>
+<ol type="1">
+<li><strong>Independence of pairs</strong>: Each subject’s change is independent of others</li>
+<li><strong>Normality of differences</strong>: The paired differences should be normally distributed</li>
+</ol>
+<p>The most important check is normality of the <strong>differences</strong> (not the original measurements).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check normality of the paired differences</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_paired, <span class="fu">aes</span>(<span class="at">sample =</span> diff)) <span class="sc">+</span>                                     <span class="co"># Use differences for Q-Q plot</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span>                                                                 <span class="co"># Add Q-Q points</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span>                                                            <span class="co"># Add reference line</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q-Q Plot of Paired Differences"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Differences should be normally distributed for paired t-test"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Theoretical Quantiles"</span>, <span class="at">y =</span> <span class="st">"Sample Quantiles"</span>) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()                                                             <span class="co"># Clean theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="t-tests-and-viz_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Also create a histogram of differences for additional visual check</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_paired, <span class="fu">aes</span>(<span class="at">x =</span> diff)) <span class="sc">+</span>                                          <span class="co"># Plot distribution of differences</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">8</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> <span class="co"># Create histogram</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co"># Add reference line at zero</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Paired Differences"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Red line shows 'no change' (difference = 0)"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Change in Titer (Post - Pre)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()                                                             <span class="co"># Clean theme</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="t-tests-and-viz_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretation</strong>: The Q-Q plot shows the differences are approximately normally distributed, so the paired t-test is appropriate.</p>
+</section>
+<section id="performing-the-paired-t-test" class="level2">
+<h2 data-anchor-id="performing-the-paired-t-test">Performing the Paired t-test</h2>
+<p>The paired t-test essentially asks: “Is the mean difference significantly different from zero?”</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired t-test comparing pre and post measurements</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>paired_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(dat_paired<span class="sc">$</span>post, dat_paired<span class="sc">$</span>pre, <span class="at">paired =</span> <span class="cn">TRUE</span>)        <span class="co"># Perform paired t-test</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>paired_test                                                                  <span class="co"># Display results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  dat_paired$post and dat_paired$pre
+t = 17.384, df = 19, p-value = 4.005e-13
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 111.2026 141.6455
+sample estimates:
+mean difference 
+        126.424 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative syntax using the difference directly</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># paired_test_alt &lt;- t.test(dat_paired$diff, mu = 0)  # Test if mean difference = 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="understanding-paired-t-test-output" class="level3">
+<h3 data-anchor-id="understanding-paired-t-test-output">Understanding Paired t-test Output</h3>
+<ul>
+<li><strong><code>t</code></strong>: t-statistic for the mean difference</li>
+<li><strong><code>df</code></strong>: Degrees of freedom (n - 1 pairs)</li>
+<li><strong><code>p-value</code></strong>: Probability of observing this mean difference (or larger) if true difference = 0</li>
+<li><strong><code>95% confidence interval</code></strong>: Range of plausible values for the true mean difference</li>
+<li><strong><code>mean of differences</code></strong>: Average change across all subjects</li>
+</ul>
+</section>
+<section id="calculate-effect-size-for-paired-data-cohens-dz" class="level3">
+<h3 data-anchor-id="calculate-effect-size-for-paired-data-cohens-dz">Calculate Effect Size for Paired Data (Cohen’s dz)</h3>
+<p>For paired data, we use <strong>Cohen’s dz</strong> (standardized mean difference):</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Cohen's dz for paired data</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>mean_diff <span class="ot">&lt;-</span> <span class="fu">mean</span>(dat_paired<span class="sc">$</span>diff)                                           <span class="co"># Mean of differences</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sd_diff <span class="ot">&lt;-</span> <span class="fu">sd</span>(dat_paired<span class="sc">$</span>diff)                                               <span class="co"># SD of differences</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>cohens_dz <span class="ot">&lt;-</span> mean_diff <span class="sc">/</span> sd_diff                                             <span class="co"># Cohen's dz formula</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cohen's dz ="</span>, <span class="fu">round</span>(cohens_dz, <span class="dv">2</span>))                                     <span class="co"># Display result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cohen's dz = 3.89</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Interpretation:"</span>, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">abs</span>(cohens_dz) <span class="sc">&lt;</span> <span class="fl">0.2</span>) <span class="st">"Negligible effect"</span> <span class="cf">else</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">abs</span>(cohens_dz) <span class="sc">&lt;</span> <span class="fl">0.5</span>) <span class="st">"Small effect"</span> <span class="cf">else</span>  </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">abs</span>(cohens_dz) <span class="sc">&lt;</span> <span class="fl">0.8</span>) <span class="st">"Medium effect"</span> <span class="cf">else</span> <span class="st">"Large effect"</span>)            <span class="co"># Interpret magnitude</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Interpretation: Large effect</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Additional summary of the changes</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Summary of Changes:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Summary of Changes:</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">- Average change:"</span>, <span class="fu">round</span>(mean_diff, <span class="dv">1</span>), <span class="st">"AU"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- Average change: 126.4 AU</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">- 95% CI for change:"</span>, <span class="fu">round</span>(paired_test<span class="sc">$</span>conf.int[<span class="dv">1</span>], <span class="dv">1</span>), <span class="st">"to"</span>, <span class="fu">round</span>(paired_test<span class="sc">$</span>conf.int[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"AU"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- 95% CI for change: 111.2 to 141.6 AU</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>subjects_improved <span class="ot">&lt;-</span> <span class="fu">sum</span>(dat_paired<span class="sc">$</span>diff <span class="sc">&gt;</span> <span class="dv">0</span>)                                <span class="co"># Count subjects who improved</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">- Subjects who improved:"</span>, subjects_improved, <span class="st">"out of"</span>, <span class="fu">nrow</span>(dat_paired), </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"("</span>, <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>subjects_improved<span class="sc">/</span><span class="fu">nrow</span>(dat_paired), <span class="dv">1</span>), <span class="st">"%)"</span>))     <span class="co"># Percentage who improved</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+- Subjects who improved: 20 out of 20 (100%)</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="publication-quality-visualization" class="level1">
+<h1>3. Publication-Quality Visualization</h1>
+<p>Creating clear, informative plots is crucial for communicating your results. Good plots should show the data, the uncertainty, and the statistical results.</p>
+<section id="unpaired-data-figure" class="level2">
+<h2 data-anchor-id="unpaired-data-figure">Unpaired Data Figure</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a publication-ready plot for unpaired data</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>p_unpaired <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_unpaired, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> titer, <span class="at">fill =</span> group)) <span class="sc">+</span> <span class="co"># Map aesthetics</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add violin plots to show distribution shape</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">width =</span> <span class="fl">0.9</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">trim =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>                      <span class="co"># Show full distribution shape</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add boxplots to show quartiles</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span>               <span class="co"># Show median and quartiles</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add individual data points</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span>                        <span class="co"># Show all individual points</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add mean points with error bars (95% CI)</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>,                  <span class="co"># Add 95% CI error bars</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"black"</span>,         <span class="co"># Add mean points</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">18</span>) <span class="sc">+</span>                                                  <span class="co"># Diamond shape for means</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Customize colors</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Control"</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>, <span class="st">"Vaccine"</span> <span class="ot">=</span> <span class="st">"#0072B2"</span>)) <span class="sc">+</span> <span class="co"># Colorblind-friendly colors</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add labels and formatting</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Vaccination Significantly Increases Antibody Titers"</span>,</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Welch's t-test: t("</span>, <span class="fu">round</span>(unpaired_test<span class="sc">$</span>parameter,<span class="dv">1</span>), <span class="st">") = "</span>, </span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">round</span>(unpaired_test<span class="sc">$</span>statistic,<span class="dv">2</span>), <span class="st">", p "</span>, </span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(unpaired_test<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, </span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">paste</span>(<span class="st">"="</span>, <span class="fu">round</span>(unpaired_test<span class="sc">$</span>p.value, <span class="dv">3</span>))),</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>                     <span class="st">", Cohen's d = "</span>, <span class="fu">round</span>(cohens_d, <span class="dv">2</span>)),</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Antibody Titer (AU)"</span>,</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Error bars show 95% CI of the mean. Diamonds indicate group means."</span></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span>                                             <span class="co"># Clean theme with readable text</span></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,                                                 <span class="co"># Remove redundant legend</span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>),                      <span class="co"># Larger title</span></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),                                  <span class="co"># Subtitle formatting</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">color =</span> <span class="st">"gray50"</span>)                   <span class="co"># Small caption</span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>p_unpaired  <span class="co"># Display the plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="t-tests-and-viz_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="paired-data-figure" class="level2">
+<h2 data-anchor-id="paired-data-figure">Paired Data Figure</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for paired visualization</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>dat_paired_long <span class="ot">&lt;-</span> dat_paired <span class="sc">|&gt;</span>                                             <span class="co"># Start with paired data</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(pre, post), <span class="at">names_to =</span> <span class="st">"time"</span>, <span class="at">values_to =</span> <span class="st">"titer"</span>) <span class="sc">|&gt;</span>      <span class="co"># Convert to long format</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">factor</span>(time, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"pre"</span>, <span class="st">"post"</span>),                      <span class="co"># Ensure proper ordering</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Pre-vaccination"</span>, <span class="st">"Post-vaccination"</span>)))   <span class="co"># Add descriptive labels</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create publication-ready paired plot</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>p_paired <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_paired_long, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> titer)) <span class="sc">+</span>              <span class="co"># Map time to x, titer to y</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add individual subject lines (spaghetti plot)</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="st">"gray60"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span>    <span class="co"># Connect paired measurements</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add individual points</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> time), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span>                     <span class="co"># Color points by timepoint</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add summary statistics</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">"black"</span>,        <span class="co"># Add mean points</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">18</span>) <span class="sc">+</span>                                                  <span class="co"># Diamond shape</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>,                 <span class="co"># Add 95% CI error bars</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Connect the means with a thick line</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">group =</span> <span class="dv">1</span>,                         <span class="co"># Connect mean points</span></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Customize colors</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Pre-vaccination"</span> <span class="ot">=</span> <span class="st">"#CC79A7"</span>, </span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"Post-vaccination"</span> <span class="ot">=</span> <span class="st">"#009E73"</span>),              <span class="co"># Colorblind-friendly</span></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>                    <span class="at">name =</span> <span class="st">"Timepoint"</span>) <span class="sc">+</span></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add labels and formatting</span></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Antibody Titers Increase After Vaccination"</span>,</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Paired t-test: t("</span>, paired_test<span class="sc">$</span>parameter, <span class="st">") = "</span>, </span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">round</span>(paired_test<span class="sc">$</span>statistic,<span class="dv">2</span>), <span class="st">", p "</span>,</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(paired_test<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, </span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">paste</span>(<span class="st">"="</span>, <span class="fu">round</span>(paired_test<span class="sc">$</span>p.value, <span class="dv">3</span>))),</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>                     <span class="st">", Cohen's dz = "</span>, <span class="fu">round</span>(cohens_dz, <span class="dv">2</span>)),</span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Antibody Titer (AU)"</span>,</span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">paste0</span>(<span class="st">"Each gray line connects measurements from one subject (n="</span>, <span class="fu">nrow</span>(dat_paired), </span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"). Black diamonds show means ± 95% CI."</span>)</span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span>                                             <span class="co"># Clean theme</span></span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>),                      <span class="co"># Larger title</span></span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),                                  <span class="co"># Subtitle formatting</span></span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">color =</span> <span class="st">"gray50"</span>),                  <span class="co"># Small caption</span></span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>                                                <span class="co"># Legend at bottom</span></span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>p_paired  <span class="co"># Display the plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="t-tests-and-viz_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="writing-professional-results" class="level1">
+<h1>4. Writing Professional Results</h1>
+<p>Good statistical reporting should include: 1. <strong>Descriptive statistics</strong> (means, SDs) 2. <strong>Test results</strong> (test statistic, df, p-value) 3. <strong>Effect size</strong> (Cohen’s d or dz) 4. <strong>Confidence intervals</strong> 5. <strong>Practical interpretation</strong></p>
+<section id="example-results-paragraphs" class="level2">
+<h2 data-anchor-id="example-results-paragraphs">Example Results Paragraphs</h2>
+<section id="for-the-unpaired-analysis" class="level3">
+<h3 data-anchor-id="for-the-unpaired-analysis">For the Unpaired Analysis:</h3>
+<blockquote class="blockquote">
+<p><strong>Vaccination Effect on Antibody Titers</strong>: Vaccination significantly increased antibody titers compared to controls. The vaccine group (M = 298.3 AU, SD = 88.8) had substantially higher titers than the control group (M = 211.5 AU, SD = 78.8). A Welch’s t-test confirmed this difference was statistically significant, t(37.5) = 3.27, p = 0.002, 95% CI [-140.6, -33.1], representing a large effect size (Cohen’s d = 1.03).</p>
+</blockquote>
+</section>
+<section id="for-the-paired-analysis" class="level3">
+<h3 data-anchor-id="for-the-paired-analysis">For the Paired Analysis:</h3>
+<blockquote class="blockquote">
+<p><strong>Pre-Post Vaccination Changes</strong>: Antibody titers increased significantly following vaccination. The mean increase was 126.4 AU (SD = 32.5), 95% CI [111.2, 141.6]. A paired t-test confirmed this change was statistically significant, t(19) = 17.38, p &lt; 0.001, representing a very large effect (Cohen’s dz = 3.89). All but 0 participants (100%) showed increased titers post-vaccination.</p>
+</blockquote>
+</section>
+</section>
+<section id="when-assumptions-are-violated" class="level2">
+<h2 data-anchor-id="when-assumptions-are-violated">When Assumptions Are Violated</h2>
+<p>If your data doesn’t meet t-test assumptions, consider these alternatives:</p>
+<section id="non-parametric-tests" class="level3">
+<h3 data-anchor-id="non-parametric-tests">Non-parametric Tests</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If normality is severely violated, use Wilcoxon tests</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For unpaired data: Mann-Whitney U test (Wilcoxon rank-sum)</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>wilcox_unpaired <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(titer <span class="sc">~</span> group, <span class="at">data =</span> dat_unpaired)           <span class="co"># Non-parametric alternative</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Wilcoxon rank-sum test p-value:"</span>, <span class="fu">round</span>(wilcox_unpaired<span class="sc">$</span>p.value, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Wilcoxon rank-sum test p-value: 0.0056</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For paired data: Wilcoxon signed-rank test</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>wilcox_paired <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(dat_paired<span class="sc">$</span>post, dat_paired<span class="sc">$</span>pre, <span class="at">paired =</span> <span class="cn">TRUE</span>) <span class="co"># Non-parametric alternative</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Wilcoxon signed-rank test p-value:"</span>, <span class="fu">round</span>(wilcox_paired<span class="sc">$</span>p.value, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Wilcoxon signed-rank test p-value: 0</code></pre>
+</div>
+</div>
+</section>
+<section id="guidelines-for-choosing-tests" class="level3">
+<h3 data-anchor-id="guidelines-for-choosing-tests">Guidelines for Choosing Tests</h3>
+<ul>
+<li><strong>Normal data, equal variances</strong>: Student’s t-test</li>
+<li><strong>Normal data, unequal variances</strong>: Welch’s t-test (default recommendation)</li>
+<li><strong>Non-normal data</strong>: Wilcoxon tests</li>
+<li><strong>Small samples (n &lt; 15)</strong>: Consider non-parametric tests</li>
+<li><strong>When in doubt</strong>: Use Welch’s t-test (robust and widely applicable)</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="summary-and-best-practices" class="level1">
+<h1>5. Summary and Best Practices</h1>
+<section id="key-takeaways" class="level2">
+<h2 data-anchor-id="key-takeaways">Key Takeaways</h2>
+<ol type="1">
+<li><strong>Always check assumptions</strong> before running t-tests</li>
+<li><strong>Use Welch’s t-test</strong> as the default for unpaired comparisons</li>
+<li><strong>Report effect sizes</strong> alongside p-values</li>
+<li><strong>Include confidence intervals</strong> for all estimates</li>
+<li><strong>Visualize your data</strong> to tell the complete story</li>
+<li><strong>Consider practical significance</strong>, not just statistical significance</li>
+</ol>
+</section>
+<section id="practice-exercises" class="level2">
+<h2 data-anchor-id="practice-exercises">Practice Exercises</h2>
+<ol type="1">
+<li><p><strong>Assumption Checking</strong>: What would you do if the Q-Q plot showed strong departures from normality?</p></li>
+<li><p><strong>Effect Size Interpretation</strong>: A study reports Cohen’s d = 0.3. How would you interpret this in practical terms?</p></li>
+<li><p><strong>Study Design</strong>: When would you choose a paired vs.&nbsp;unpaired design for an immunology study?</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Practice Challenge</strong>: Try modifying the simulation parameters in the setup chunk. What happens to the p-values and effect sizes when you: - Reduce the sample sizes? - Make the group means closer together? - Increase the standard deviations?</p>
+</div>
+</div>
+</section>
+<section id="next-steps" class="level2">
+<h2 data-anchor-id="next-steps">Next Steps</h2>
+<ul>
+<li>Learn about multiple comparisons and ANOVA for comparing &gt;2 groups</li>
+<li>Explore more advanced visualization techniques</li>
+<li>Study power analysis for sample size planning</li>
+<li>Learn about regression analysis for continuous predictors</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

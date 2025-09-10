@@ -1,0 +1,459 @@
+---
+title: "Session 4: t-tests and Visualization"
+author: "Eren Ada, PhD"
+date: "09/09/2025"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+# Introduction
+
+This document walks through performing, interpreting, and visualizing t-tests using simulated immunology data. We will cover:
+
+1. **Checking Assumptions**: Ensuring the t-test is appropriate
+2. **Unpaired t-test**: Comparing antibody titers between Control and Vaccine groups
+3. **Paired t-test**: Comparing Pre- and Post-vaccination titers
+4. **Visualization**: Creating publication-quality figures
+
+```{r setup, message=FALSE, warning=FALSE}
+# Load required packages for data manipulation, visualization, and statistical testing
+library(tidyverse)  # For data manipulation (dplyr) and visualization (ggplot2)
+library(car)        # For Levene's test (variance equality)
+
+# Set seed to ensure reproducible random number generation
+# This means anyone running this code will get the exact same results
+set.seed(42)
+
+# Generate example immunology data for demonstration
+# Unpaired data: Control vs Vaccine groups (different subjects)
+n_control <- 20                                                                # Number of control subjects
+n_vax <- 20                                                                    # Number of vaccinated subjects
+control_titer <- rnorm(n_control, mean = 200, sd = 60)                        # Control group antibody titers
+vax_titer <- rnorm(n_vax, mean = 320, sd = 80)                                # Vaccine group: higher mean, more variable
+
+# Combine into a tidy data frame for analysis
+dat_unpaired <- tibble(
+  group = rep(c("Control","Vaccine"), c(n_control, n_vax)),                   # Group labels
+  titer = c(control_titer, vax_titer)                                          # All titer measurements
+)
+
+# Paired data: Pre vs Post vaccination (same subjects measured twice)
+n <- 20                                                                        # Number of subjects
+pre <- rnorm(n, mean = 200, sd = 60)                                          # Baseline titers before vaccination
+true_boost <- rnorm(n, mean = 120, sd = 40)                                   # Individual vaccine response varies
+post <- pre + true_boost                                                      # Post-vaccination = baseline + boost
+
+# Create paired data frame
+dat_paired <- tibble(
+  id = seq_len(n),                                                            # Subject identifier
+  pre = pre,                                                                   # Pre-vaccination titers
+  post = post,                                                                 # Post-vaccination titers
+  diff = post - pre                                                            # Change for each subject
+)
+```
+
+# 1. The Unpaired t-test: Control vs. Vaccine
+
+## Checking Assumptions
+
+Before running any t-test, we must verify that our data meets the required assumptions. Violating these assumptions can lead to incorrect conclusions.
+
+A t-test has three main assumptions:
+
+1. **Independence**: Observations in one group are independent of the other (and within groups)
+2. **Normality**: Data in each group are approximately normally distributed  
+3. **Homogeneity of Variances**: The two groups have similar variances (for Student's t-test)
+
+Let's check each assumption systematically.
+
+### 1. Independence Check
+
+**Independence** means that:
+- Each subject's measurement doesn't influence another subject's measurement
+- Observations within each group are independent
+- The two groups are independent of each other
+
+In our case, this is satisfied by our experimental design (different subjects in each group, no repeated measures).
+
+### 2. Normality Check
+
+**Q-Q plots** (quantile-quantile plots) help us assess if our data follows a normal distribution:
+- If data is normal, points should fall close to the diagonal line
+- Systematic deviations suggest non-normality
+- Small deviations are usually acceptable, especially with moderate sample sizes
+
+```{r}
+# Create Q-Q plots to check normality assumption for each group
+ggplot(dat_unpaired, aes(sample = titer, color = group)) +                     # Map titer to sample quantiles, color by group
+  stat_qq() +                                                                  # Add Q-Q points
+  stat_qq_line() +                                                             # Add reference line for perfect normality
+  facet_wrap(~group, scales = "free") +                                        # Separate plot for each group
+  labs(title = "Q-Q Plots for Normality Check",                               # Add informative title
+       subtitle = "Points should fall close to the line if data is normal") + 
+  theme_minimal()                                                              # Clean theme
+```
+
+**Interpretation**: The points fall close to the line for both groups, suggesting the normality assumption is reasonable. Minor deviations at the extremes are common and acceptable.
+
+### 3. Homogeneity of Variances Check
+
+We need to check if the two groups have similar variances. We can do this visually and with a formal test.
+
+#### Visual Check: Compare Spreads
+
+```{r}
+# Visual comparison of variances using boxplots
+ggplot(dat_unpaired, aes(x = group, y = titer, fill = group)) +               # Map group to x, titer to y
+  geom_boxplot(alpha = 0.7) +                                                 # Create boxplots to compare spreads
+  geom_jitter(width = 0.2, alpha = 0.6) +                                     # Add individual points
+  labs(title = "Comparing Variances Between Groups",
+       subtitle = "Look for similar box heights and whisker lengths",
+       x = "Group", y = "Antibody Titer (AU)") +
+  theme_minimal()
+
+# Calculate and display group variances
+dat_unpaired |>                                                               # Start with our data
+  group_by(group) |>                                                          # Group by Control vs Vaccine
+  summarise(                                                                  # Calculate variance statistics
+    n = n(),                                                                  # Sample size
+    variance = var(titer),                                                    # Variance
+    sd = sd(titer),                                                           # Standard deviation
+    .groups = "drop"                                                          # Remove grouping
+  ) |>
+  knitr::kable(digits = 1, caption = "Variance Comparison")                   # Create formatted table
+```
+
+#### Formal Test: Levene's Test
+
+**Levene's test** formally tests for equal variances:
+- H₀: Variances are equal
+- Ha: Variances are different
+- If p > 0.05, we don't reject H₀ (variances likely equal)
+
+```{r}
+# Levene's test for equality of variances
+levene_result <- leveneTest(titer ~ group, data = dat_unpaired)              # Test variance equality
+levene_result                                                                # Display results
+```
+
+**Decision Rule**:
+- If variances are equal (Levene's p > 0.05): Can use Student's t-test
+- If variances are unequal (Levene's p ≤ 0.05): Should use Welch's t-test
+- **Default recommendation**: Use Welch's t-test (it works well in both cases)
+
+## Performing the t-test
+
+Now we'll run the actual t-test. We'll use **Welch's t-test** (the default in R) because it's more robust and doesn't assume equal variances.
+
+### Understanding t-test Types
+
+- **Student's t-test** (`var.equal = TRUE`): Assumes equal variances
+- **Welch's t-test** (`var.equal = FALSE`, default): Doesn't assume equal variances
+- **Welch's test is generally preferred** as it performs well even when variances are equal
+
+```{r}
+# Welch's two-sample t-test (default, safer choice)
+unpaired_test <- t.test(titer ~ group, data = dat_unpaired)                   # Perform Welch's t-test
+unpaired_test                                                                 # Display full results
+```
+
+### Understanding the Output
+
+Let's break down each part of the t-test output:
+
+- **`t`**: The t-statistic (how many standard errors the difference is from zero)
+- **`df`**: Degrees of freedom (affects the p-value calculation)
+- **`p-value`**: Probability of seeing this result (or more extreme) if H₀ were true
+- **`95% confidence interval`**: Range of plausible values for the true difference
+- **`sample estimates`**: Mean values for each group
+
+### Calculate Effect Size (Cohen's d)
+
+**Effect size** tells us how meaningful the difference is, not just whether it's statistically significant.
+
+```{r}
+# Calculate Cohen's d manually for unpaired data
+group_stats <- dat_unpaired |>                                               # Start with our data
+  group_by(group) |>                                                          # Group by Control vs Vaccine
+  summarise(                                                                  # Calculate group statistics
+    n = n(),                                                                  # Sample size
+    mean = mean(titer),                                                       # Group mean
+    sd = sd(titer),                                                           # Group standard deviation
+    .groups = "drop"                                                          # Remove grouping
+  )
+
+# Extract values for Cohen's d calculation
+control_stats <- group_stats |> filter(group == "Control")                   # Control group statistics
+vaccine_stats <- group_stats |> filter(group == "Vaccine")                   # Vaccine group statistics
+
+# Calculate pooled standard deviation
+pooled_sd <- sqrt(((control_stats$n - 1) * control_stats$sd^2 + 
+                   (vaccine_stats$n - 1) * vaccine_stats$sd^2) / 
+                  (control_stats$n + vaccine_stats$n - 2))                    # Pooled SD formula
+
+# Calculate Cohen's d
+cohens_d <- (vaccine_stats$mean - control_stats$mean) / pooled_sd            # Effect size calculation
+
+cat("Cohen's d =", round(cohens_d, 2))                                       # Display result
+cat("\nInterpretation:", 
+    if(abs(cohens_d) < 0.2) "Negligible effect" else
+    if(abs(cohens_d) < 0.5) "Small effect" else  
+    if(abs(cohens_d) < 0.8) "Medium effect" else "Large effect")             # Interpret magnitude
+```
+
+# 2. The Paired t-test: Pre vs. Post Vaccination
+
+**Paired t-tests** are used when we have two measurements from the same subjects. This is more powerful than unpaired tests because it controls for individual differences.
+
+## Checking Assumptions
+
+For paired data, the key assumptions are:
+
+1. **Independence of pairs**: Each subject's change is independent of others
+2. **Normality of differences**: The paired differences should be normally distributed
+
+The most important check is normality of the **differences** (not the original measurements).
+
+```{r}
+# Check normality of the paired differences
+ggplot(dat_paired, aes(sample = diff)) +                                     # Use differences for Q-Q plot
+  stat_qq() +                                                                 # Add Q-Q points
+  stat_qq_line() +                                                            # Add reference line
+  labs(title = "Q-Q Plot of Paired Differences",
+       subtitle = "Differences should be normally distributed for paired t-test",
+       x = "Theoretical Quantiles", y = "Sample Quantiles") +
+  theme_minimal()                                                             # Clean theme
+
+# Also create a histogram of differences for additional visual check
+ggplot(dat_paired, aes(x = diff)) +                                          # Plot distribution of differences
+  geom_histogram(bins = 8, fill = "steelblue", alpha = 0.7, color = "black") + # Create histogram
+  geom_vline(xintercept = 0, color = "red", linetype = "dashed", size = 1) + # Add reference line at zero
+  labs(title = "Distribution of Paired Differences",
+       subtitle = "Red line shows 'no change' (difference = 0)",
+       x = "Change in Titer (Post - Pre)", y = "Count") +
+  theme_minimal()                                                             # Clean theme
+```
+
+**Interpretation**: The Q-Q plot shows the differences are approximately normally distributed, so the paired t-test is appropriate.
+
+## Performing the Paired t-test
+
+The paired t-test essentially asks: "Is the mean difference significantly different from zero?"
+
+```{r}
+# Paired t-test comparing pre and post measurements
+paired_test <- t.test(dat_paired$post, dat_paired$pre, paired = TRUE)        # Perform paired t-test
+paired_test                                                                  # Display results
+
+# Alternative syntax using the difference directly
+# paired_test_alt <- t.test(dat_paired$diff, mu = 0)  # Test if mean difference = 0
+```
+
+### Understanding Paired t-test Output
+
+- **`t`**: t-statistic for the mean difference
+- **`df`**: Degrees of freedom (n - 1 pairs)
+- **`p-value`**: Probability of observing this mean difference (or larger) if true difference = 0
+- **`95% confidence interval`**: Range of plausible values for the true mean difference
+- **`mean of differences`**: Average change across all subjects
+
+### Calculate Effect Size for Paired Data (Cohen's dz)
+
+For paired data, we use **Cohen's dz** (standardized mean difference):
+
+```{r}
+# Calculate Cohen's dz for paired data
+mean_diff <- mean(dat_paired$diff)                                           # Mean of differences
+sd_diff <- sd(dat_paired$diff)                                               # SD of differences
+cohens_dz <- mean_diff / sd_diff                                             # Cohen's dz formula
+
+cat("Cohen's dz =", round(cohens_dz, 2))                                     # Display result
+cat("\nInterpretation:", 
+    if(abs(cohens_dz) < 0.2) "Negligible effect" else
+    if(abs(cohens_dz) < 0.5) "Small effect" else  
+    if(abs(cohens_dz) < 0.8) "Medium effect" else "Large effect")            # Interpret magnitude
+
+# Additional summary of the changes
+cat("\n\nSummary of Changes:")
+cat("\n- Average change:", round(mean_diff, 1), "AU")
+cat("\n- 95% CI for change:", round(paired_test$conf.int[1], 1), "to", round(paired_test$conf.int[2], 1), "AU")
+subjects_improved <- sum(dat_paired$diff > 0)                                # Count subjects who improved
+cat("\n- Subjects who improved:", subjects_improved, "out of", nrow(dat_paired), 
+    paste0("(", round(100*subjects_improved/nrow(dat_paired), 1), "%)"))     # Percentage who improved
+```
+
+# 3. Publication-Quality Visualization
+
+Creating clear, informative plots is crucial for communicating your results. Good plots should show the data, the uncertainty, and the statistical results.
+
+## Unpaired Data Figure
+
+```{r}
+# Create a publication-ready plot for unpaired data
+p_unpaired <- ggplot(dat_unpaired, aes(x = group, y = titer, fill = group)) + # Map aesthetics
+  # Add violin plots to show distribution shape
+  geom_violin(width = 0.9, alpha = 0.3, trim = FALSE) +                      # Show full distribution shape
+  # Add boxplots to show quartiles
+  geom_boxplot(width = 0.2, outlier.shape = NA, alpha = 0.7) +               # Show median and quartiles
+  # Add individual data points
+  geom_jitter(width = 0.1, alpha = 0.6, size = 1.5) +                        # Show all individual points
+  # Add mean points with error bars (95% CI)
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar",                  # Add 95% CI error bars
+               width = 0.1, size = 1, color = "black") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "black",         # Add mean points
+               shape = 18) +                                                  # Diamond shape for means
+  # Customize colors
+  scale_fill_manual(values = c("Control" = "#E69F00", "Vaccine" = "#0072B2")) + # Colorblind-friendly colors
+  # Add labels and formatting
+  labs(
+    title = "Vaccination Significantly Increases Antibody Titers",
+    subtitle = paste0("Welch's t-test: t(", round(unpaired_test$parameter,1), ") = ", 
+                     round(unpaired_test$statistic,2), ", p ", 
+                     ifelse(unpaired_test$p.value < 0.001, "< 0.001", 
+                            paste("=", round(unpaired_test$p.value, 3))),
+                     ", Cohen's d = ", round(cohens_d, 2)),
+    x = NULL,
+    y = "Antibody Titer (AU)",
+    caption = "Error bars show 95% CI of the mean. Diamonds indicate group means."
+  ) +
+  theme_minimal(base_size = 12) +                                             # Clean theme with readable text
+  theme(
+    legend.position = "none",                                                 # Remove redundant legend
+    plot.title = element_text(size = 14, face = "bold"),                      # Larger title
+    plot.subtitle = element_text(size = 11),                                  # Subtitle formatting
+    plot.caption = element_text(size = 9, color = "gray50")                   # Small caption
+  )
+
+p_unpaired  # Display the plot
+```
+
+## Paired Data Figure
+
+```{r}
+# Prepare data for paired visualization
+dat_paired_long <- dat_paired |>                                             # Start with paired data
+  pivot_longer(c(pre, post), names_to = "time", values_to = "titer") |>      # Convert to long format
+  mutate(time = factor(time, levels = c("pre", "post"),                      # Ensure proper ordering
+                       labels = c("Pre-vaccination", "Post-vaccination")))   # Add descriptive labels
+
+# Create publication-ready paired plot
+p_paired <- ggplot(dat_paired_long, aes(x = time, y = titer)) +              # Map time to x, titer to y
+  # Add individual subject lines (spaghetti plot)
+  geom_line(aes(group = id), alpha = 0.3, color = "gray60", size = 0.5) +    # Connect paired measurements
+  # Add individual points
+  geom_point(aes(color = time), size = 2, alpha = 0.7) +                     # Color points by timepoint
+  # Add summary statistics
+  stat_summary(fun = mean, geom = "point", size = 4, color = "black",        # Add mean points
+               shape = 18) +                                                  # Diamond shape
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar",                 # Add 95% CI error bars
+               width = 0.1, size = 1.2, color = "black") +
+  # Connect the means with a thick line
+  stat_summary(fun = mean, geom = "line", group = 1,                         # Connect mean points
+               size = 2, color = "black", alpha = 0.8) +
+  # Customize colors
+  scale_color_manual(values = c("Pre-vaccination" = "#CC79A7", 
+                               "Post-vaccination" = "#009E73"),              # Colorblind-friendly
+                    name = "Timepoint") +
+  # Add labels and formatting
+  labs(
+    title = "Antibody Titers Increase After Vaccination",
+    subtitle = paste0("Paired t-test: t(", paired_test$parameter, ") = ", 
+                     round(paired_test$statistic,2), ", p ",
+                     ifelse(paired_test$p.value < 0.001, "< 0.001", 
+                            paste("=", round(paired_test$p.value, 3))),
+                     ", Cohen's dz = ", round(cohens_dz, 2)),
+    x = NULL,
+    y = "Antibody Titer (AU)",
+    caption = paste0("Each gray line connects measurements from one subject (n=", nrow(dat_paired), 
+                    "). Black diamonds show means ± 95% CI.")
+  ) +
+  theme_minimal(base_size = 12) +                                             # Clean theme
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),                      # Larger title
+    plot.subtitle = element_text(size = 11),                                  # Subtitle formatting
+    plot.caption = element_text(size = 9, color = "gray50"),                  # Small caption
+    legend.position = "bottom"                                                # Legend at bottom
+  )
+
+p_paired  # Display the plot
+```
+
+# 4. Writing Professional Results
+
+Good statistical reporting should include:
+1. **Descriptive statistics** (means, SDs)
+2. **Test results** (test statistic, df, p-value)
+3. **Effect size** (Cohen's d or dz)
+4. **Confidence intervals**
+5. **Practical interpretation**
+
+## Example Results Paragraphs
+
+### For the Unpaired Analysis:
+
+> **Vaccination Effect on Antibody Titers**: Vaccination significantly increased antibody titers compared to controls. The vaccine group (M = `r round(vaccine_stats$mean, 1)` AU, SD = `r round(vaccine_stats$sd, 1)`) had substantially higher titers than the control group (M = `r round(control_stats$mean, 1)` AU, SD = `r round(control_stats$sd, 1)`). A Welch's t-test confirmed this difference was statistically significant, t(`r round(unpaired_test$parameter, 1)`) = `r round(abs(unpaired_test$statistic), 2)`, p `r ifelse(unpaired_test$p.value < 0.001, "< 0.001", paste("=", round(unpaired_test$p.value, 3)))`, 95% CI [`r round(unpaired_test$conf.int[1], 1)`, `r round(unpaired_test$conf.int[2], 1)`], representing a large effect size (Cohen's d = `r round(cohens_d, 2)`).
+
+### For the Paired Analysis:
+
+> **Pre-Post Vaccination Changes**: Antibody titers increased significantly following vaccination. The mean increase was `r round(mean_diff, 1)` AU (SD = `r round(sd_diff, 1)`), 95% CI [`r round(paired_test$conf.int[1], 1)`, `r round(paired_test$conf.int[2], 1)`]. A paired t-test confirmed this change was statistically significant, t(`r paired_test$parameter`) = `r round(paired_test$statistic, 2)`, p `r ifelse(paired_test$p.value < 0.001, "< 0.001", paste("=", round(paired_test$p.value, 3)))`, representing a very large effect (Cohen's dz = `r round(cohens_dz, 2)`). All but `r nrow(dat_paired) - subjects_improved` participants (`r round(100*subjects_improved/nrow(dat_paired), 1)`%) showed increased titers post-vaccination.
+
+## When Assumptions Are Violated
+
+If your data doesn't meet t-test assumptions, consider these alternatives:
+
+### Non-parametric Tests
+
+```{r}
+# If normality is severely violated, use Wilcoxon tests
+
+# For unpaired data: Mann-Whitney U test (Wilcoxon rank-sum)
+wilcox_unpaired <- wilcox.test(titer ~ group, data = dat_unpaired)           # Non-parametric alternative
+cat("Wilcoxon rank-sum test p-value:", round(wilcox_unpaired$p.value, 4))
+
+# For paired data: Wilcoxon signed-rank test
+wilcox_paired <- wilcox.test(dat_paired$post, dat_paired$pre, paired = TRUE) # Non-parametric alternative
+cat("\nWilcoxon signed-rank test p-value:", round(wilcox_paired$p.value, 4))
+```
+
+### Guidelines for Choosing Tests
+
+- **Normal data, equal variances**: Student's t-test
+- **Normal data, unequal variances**: Welch's t-test (default recommendation)
+- **Non-normal data**: Wilcoxon tests
+- **Small samples (n < 15)**: Consider non-parametric tests
+- **When in doubt**: Use Welch's t-test (robust and widely applicable)
+
+# 5. Summary and Best Practices
+
+## Key Takeaways
+
+1. **Always check assumptions** before running t-tests
+2. **Use Welch's t-test** as the default for unpaired comparisons
+3. **Report effect sizes** alongside p-values
+4. **Include confidence intervals** for all estimates
+5. **Visualize your data** to tell the complete story
+6. **Consider practical significance**, not just statistical significance
+
+## Practice Exercises
+
+1. **Assumption Checking**: What would you do if the Q-Q plot showed strong departures from normality?
+
+2. **Effect Size Interpretation**: A study reports Cohen's d = 0.3. How would you interpret this in practical terms?
+
+3. **Study Design**: When would you choose a paired vs. unpaired design for an immunology study?
+
+::: {.callout-tip}
+**Practice Challenge**: Try modifying the simulation parameters in the setup chunk. What happens to the p-values and effect sizes when you:
+- Reduce the sample sizes?
+- Make the group means closer together?
+- Increase the standard deviations?
+:::
+
+## Next Steps
+
+- Learn about multiple comparisons and ANOVA for comparing >2 groups
+- Explore more advanced visualization techniques
+- Study power analysis for sample size planning
+- Learn about regression analysis for continuous predictors

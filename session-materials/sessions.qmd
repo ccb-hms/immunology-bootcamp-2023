@@ -18,7 +18,7 @@ You can browse the materials for each Session on this website, but for class you
 ### Session 3: Data Exploration & Visualization
 [Download Session 4 Materials Here](https://download-directory.github.io?url=https://github.com/ccb-hms/immunology-bootcamp-2023/tree/main/session-materials/session3)
 
-### Session 4: Modeling
+### Session 4: Basic Statistics & t-tests
 [Download Session 4 Materials Here](https://download-directory.github.io?url=https://github.com/ccb-hms/immunology-bootcamp-2023/tree/main/session-materials/session4)
 
 ### Session 5: Bulk RNA-seq

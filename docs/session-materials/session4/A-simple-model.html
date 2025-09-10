@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,12 +68,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-80f179d829f1c8f84f528aeb74bc991b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-42af0f19a1edc56f631791d5280476d7.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/t-test.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/A-simple-model.html">A simple model</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/basic-stats.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/A-simple-model.html">A simple model</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -284,14 +284,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/t-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">t-test</span></a>
+  <a href="../../session-materials/session4/basic-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: Foundational Statistics for t-tests</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/Intro-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Session 4: Modeling</span></a>
+  <a href="../../session-materials/session4/immunology-simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: Simulating Immunology Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session4/t-tests-and-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: t-tests and Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -303,13 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../session-materials/session4/model-building.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model-Building</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/factorial-design.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multi-factor Designs</span></a>
+ <span class="menu-text">model-building.html</span></a>
   </div>
 </li>
       </ul>
@@ -354,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/t-test.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/A-simple-model.html">A simple model</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/basic-stats.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/A-simple-model.html">A simple model</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">A simple model</h1>
 </div>
@@ -387,8 +387,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ lubridate 1.9.3     ✔ tibble    3.2.1
-✔ purrr     1.0.2     ✔ tidyr     1.3.1
+✔ lubridate 1.9.4     ✔ tibble    3.2.1
+✔ purrr     1.0.4     ✔ tidyr     1.3.1
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -463,16 +463,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 250 × 3
        a1     a2  dist
     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
- 1  37.2  -2.46  15.4 
- 2  10.6   0.195  6.93
- 3  19.7   1.51  12.8 
- 4   7.86 -2.48  25.0 
- 5 -10.8   3.74   7.83
- 6 -15.7  -1.22  39.2 
- 7  -3.39 -0.387 22.3 
- 8  30.6   3.17  32.8 
- 9  17.0   3.72  22.5 
-10   7.21  4.89  20.4 
+ 1 -15.0   0.663 27.2 
+ 2  23.2  -0.329  9.27
+ 3   6.87 -2.58  26.5 
+ 4  24.6   2.34  22.1 
+ 5   9.82 -4.13  33.6 
+ 6  25.2   0.620 13.9 
+ 7 -12.4  -3.29  48.6 
+ 8  10.3   4.02  18.0 
+ 9   3.41 -4.74  42.9 
+10  36.0   3.51  40.1 
 # ℹ 240 more rows</code></pre>
 </div>
 </div>
@@ -785,8 +785,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -897,7 +895,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
