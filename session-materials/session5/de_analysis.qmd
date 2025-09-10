@@ -4,22 +4,48 @@ A basic task in the analysis of RNA-seq count data is the detection of different
 
 We start by loading the [DESeq2](https://bioconductor.org/packages/DESeq2) package, a very popular method for analysing differential expression of bulk RNA-seq data.
 
-```{r, message=FALSE}
-library("DESeq2")
-library(tidyverse)
+```{r setup, message=FALSE, warning=FALSE}
+# This chunk ensures all necessary packages are installed and loaded.
+
+# List of CRAN packages
+cran_packages <- c("tidyverse")
+
+# List of Bioconductor packages
+bioc_packages <- c("DESeq2", "airway")
+
+# Check and install CRAN packages
+for (pkg in cran_packages) {
+  if (!require(pkg, character.only = TRUE, quietly = TRUE)) {
+    install.packages(pkg, dependencies = TRUE, repos = "https://cran.rstudio.com/")
+  }
+}
+
+# Check and install Bioconductor packages
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager", repos = "https://cran.rstudio.com/")
+}
+
+for (pkg in bioc_packages) {
+  if (!require(pkg, character.only = TRUE, quietly = TRUE)) {
+    BiocManager::install(pkg, dependencies = TRUE)
+  }
+}
+
+# Load all packages
+invisible(lapply(c(cran_packages, bioc_packages), library, character.only = TRUE))
 ```
 
 [DESeq2](https://bioconductor.org/packages/DESeq2) requires count data like that in the `SummarizedExperiment` we have been working with.
 
 The [airway](https://bioconductor.org/packages/airway) experimental data package contains an example dataset from an RNA-Seq experiment of read counts per gene for airway smooth muscles. These data are stored in a `RangedSummarizedExperiment` object which contains 8 different experimental samples and assays 64,102 gene transcripts.
 
-```{r, message=FALSE}
-library(airway)
-data(airway)
-se <- airway
-se
-rowRanges(se)
-colData(se)
+```{r}
+# Load the airway dataset (already loaded above in setup)
+data(airway)                    # Load the example dataset
+se <- airway                    # Assign to shorter variable name
+se                              # Display the SummarizedExperiment object
+rowRanges(se)                   # Show information about genes/rows
+colData(se)                     # Show information about samples/columns
 ```
 
 The package requires count data like that in the `SummarizedExperiment` we have been working with, in addition to a `formula` describing the experimental design. We use the cell line as a covariate, and dexamethazone treatment as the main factor that we are interested in.

@@ -84,9 +84,15 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 ```{r message=FALSE, warning=FALSE}
 #| echo: false
 #| message: false
-library(tidyverse)
-library(reactable)
-library(reactablefmtr)
+
+# Check and install required packages
+packages <- c("tidyverse", "reactable", "reactablefmtr")
+for (pkg in packages) {
+  if (!require(pkg, character.only = TRUE, quietly = TRUE)) {
+    install.packages(pkg, dependencies = TRUE, repos = "https://cran.rstudio.com/")
+    library(pkg, character.only = TRUE)
+  }
+}
 #Load schedule
 sched <- read_csv("schedule.csv")
 

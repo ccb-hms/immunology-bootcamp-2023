@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,12 +69,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-80f179d829f1c8f84f528aeb74bc991b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-42af0f19a1edc56f631791d5280476d7.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -285,14 +285,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/t-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">t-test</span></a>
+  <a href="../../session-materials/session4/basic-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: Foundational Statistics for t-tests</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/Intro-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Session 4: Modeling</span></a>
+  <a href="../../session-materials/session4/immunology-simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: Simulating Immunology Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session4/t-tests-and-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: t-tests and Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -304,13 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../session-materials/session4/model-building.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model-Building</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/factorial-design.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multi-factor Designs</span></a>
+ <span class="menu-text">model-building.html</span></a>
   </div>
 </li>
       </ul>
@@ -440,16 +440,16 @@ Levels: high low medium</code></pre>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   gene_names expression numeric_expression
-1         Asl       high          4611.5771
-2        Apod        low          2575.3622
-3     Cyp2d22        low          2287.2863
-4        Klk6     medium          2891.7378
-5       Fcrls       high          4201.3507
-6      Slc2a4     medium           867.4954
-7        Exd2     medium          1549.6654
-8        Gjc2        low           718.7164
-9        Plp1        low          1439.4280
-10       Gnb4        low          -108.2199</code></pre>
+1         Asl       high          2866.1309
+2        Apod        low          -588.4461
+3     Cyp2d22        low          1046.1175
+4        Klk6     medium          3312.0732
+5       Fcrls       high          4779.3705
+6      Slc2a4     medium          2715.4699
+7        Exd2     medium          -242.7500
+8        Gjc2        low          2624.9758
+9        Plp1        low          2370.6582
+10       Gnb4        low          1088.4317</code></pre>
 </div>
 </div>
 </section>
@@ -473,16 +473,16 @@ Levels: low medium high
 
 [[2]]
    gene_names expression numeric_expression
-1         Asl       high          4611.5771
-2        Apod        low          2575.3622
-3     Cyp2d22        low          2287.2863
-4        Klk6     medium          2891.7378
-5       Fcrls       high          4201.3507
-6      Slc2a4     medium           867.4954
-7        Exd2     medium          1549.6654
-8        Gjc2        low           718.7164
-9        Plp1        low          1439.4280
-10       Gnb4        low          -108.2199
+1         Asl       high          2866.1309
+2        Apod        low          -588.4461
+3     Cyp2d22        low          1046.1175
+4        Klk6     medium          3312.0732
+5       Fcrls       high          4779.3705
+6      Slc2a4     medium          2715.4699
+7        Exd2     medium          -242.7500
+8        Gjc2        low          2624.9758
+9        Plp1        low          2370.6582
+10       Gnb4        low          1088.4317
 
 [[3]]
 [1] 102</code></pre>
@@ -716,8 +716,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -828,7 +826,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
