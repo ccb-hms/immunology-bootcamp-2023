@@ -319,7 +319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/t-test.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/A-simple-model.html">A simple model</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/basic-stats.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/A-simple-model.html">A simple model</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -457,14 +457,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/t-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">t-test</span></a>
+  <a href="../../session-materials/session4/basic-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: Foundational Statistics for t-tests</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/Intro-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Session 4: Modeling</span></a>
+  <a href="../../session-materials/session4/immunology-simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: Simulating Immunology Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../session-materials/session4/t-tests-and-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 4: t-tests and Visualization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -476,13 +482,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../session-materials/session4/model-building.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Model-Building</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../session-materials/session4/factorial-design.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multi-factor Designs</span></a>
+ <span class="menu-text">model-building.html</span></a>
   </div>
 </li>
       </ul>
@@ -528,7 +528,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/t-test.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/A-simple-model.html">A simple model</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../session-materials/session4/basic-stats.html">Session 4</a></li><li class="breadcrumb-item"><a href="../../session-materials/session4/A-simple-model.html">A simple model</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">A simple model</h1>
 </div>
@@ -637,16 +637,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 250 × 3
        a1     a2  dist
     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
- 1  26.4  -3.26   16.9
- 2  31.4  -3.19   15.3
- 3  26.0   2.79   26.0
- 4  17.3  -2.94   20.4
- 5 -13.4  -4.24   55.2
- 6   9.20  4.33   18.8
- 7  17.6   3.16   19.9
- 8  16.4   2.59   15.4
- 9  -5.00  0.223  20.1
-10  10.5   4.15   18.9
+ 1  17.0   2.60  16.0 
+ 2  27.5   4.14  35.4 
+ 3  -7.43 -0.466 26.6 
+ 4   5.08  2.31   3.22
+ 5 -10.8  -4.78  56.2 
+ 6  20.0  -4.85  29.9 
+ 7   5.72 -3.59  33.8 
+ 8  13.1  -1.10  12.6 
+ 9  20.0  -2.72  17.3 
+10 -19.2   4.20  13.3 
 # ℹ 240 more rows</code></pre>
 </div>
 </div>
