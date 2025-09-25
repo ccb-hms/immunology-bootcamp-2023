@@ -13,9 +13,9 @@ This material is prepared through collaboration between Chris Magnano, PhD (Core
 
 ### Details {.unnumbered}
 
-{{< fa calendar >}} &nbsp; Sep 5 - Nov 21
+{{< fa calendar >}} &nbsp; Sep 5 - Dec 5
 
-{{< fa map-marker >}} &nbsp; TMEC 338 & 443[^1]
+{{< fa map-marker >}} &nbsp; TMEC 338 & 442[^1]
 
 [^1]: Sessions will be in-person only. 
 
